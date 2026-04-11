@@ -12,18 +12,30 @@ interface IntroSequenceProps {
 const PLACEHOLDER_TEXT = "Loading experience...";
 const MAIN_TITLE = "4Q-AA: Sierpinski's Triangle";
 
+/* ─── Lyrics window content (same lines as LyricsPanel) ─── */
+const LYRICS_LINES = [
+  "For just a moment in the light",
+  "You set the world beyond my sight",
+  "I'd chase the horizon if you asked me to",
+  "Say you want the stars, I'll build a ladder high",
+  "No peak too steep, no ocean too wide",
+  "It's wild, but it's real",
+  "There's nothing I can't feel",
+];
+
 const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
-  const modelRef = useRef<HTMLDivElement>(null);
+  const lyricsRef = useRef<HTMLDivElement>(null);
   const [displayText, setDisplayText] = useState("");
   const [phase, setPhase] = useState<
     "typing" | "selecting" | "dissolving" | "retyping" | "dragging" | "done"
   >("typing");
   const [isSelected, setIsSelected] = useState(false);
-  const [showModel, setShowModel] = useState(false);
+  const [showLyrics, setShowLyrics] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
+  const [showScene, setShowScene] = useState(false);
 
   const typeText = useCallback((text: string, _delay: number): Promise<void> => {
     return new Promise((resolve) => {
@@ -43,8 +55,8 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
     const cursor = cursorRef.current;
     const textEl = textRef.current;
     const container = containerRef.current;
-    const model = modelRef.current;
-    if (!cursor || !textEl || !container || !model) return;
+    const lyrics = lyricsRef.current;
+    if (!cursor || !textEl || !container || !lyrics) return;
 
     const tl = gsap.timeline();
 
@@ -91,7 +103,6 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
       setIsSelected(false);
       setPhase("retyping");
 
-      // Move cursor to center for typing title
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
           left: container.clientWidth / 2 - 100,
@@ -106,48 +117,52 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
       await typeText(MAIN_TITLE, 60);
       await new Promise((r) => setTimeout(r, 600));
 
-      // Keep title visible permanently
       setTitleVisible(true);
       setDisplayText("");
 
-      // Phase 6: Cursor moves offscreen right to "grab" the model
+      // Show 3D scene in background
+      setShowScene(true);
+
+      // Phase 6: Cursor exits right to "grab" the lyrics window
       setPhase("dragging");
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
           left: container.clientWidth + 50,
-          top: container.clientHeight / 2,
+          top: container.clientHeight * 0.3,
           duration: 0.6,
           ease: "power2.in",
           onComplete: resolve,
         });
       });
 
-      // Show model offscreen right, positioned next to cursor
-      setShowModel(true);
-      gsap.set(model, {
-        left: container.clientWidth + 60,
-        top: "10%",
-        width: "70%",
-        height: "70%",
+      // Show lyrics window offscreen right
+      setShowLyrics(true);
+      gsap.set(lyrics, {
+        right: -320,
+        top: "15%",
         opacity: 1,
       });
 
       await new Promise((r) => setTimeout(r, 200));
 
-      // Cursor "grabs" and drags model into center
-      const targetLeft = container.clientWidth * 0.2;
-      const targetTop = container.clientHeight * 0.1;
+      // Cursor drags lyrics window to left side
+      const targetRight = container.clientWidth - 320;
 
       await new Promise<void>((resolve) => {
+        tl.to(cursor, {
+          left: 40,
+          duration: 1.2,
+          ease: "power3.out",
+        });
         tl.to(
-          [cursor, model],
+          lyrics,
           {
-            left: (i: number) =>
-              i === 0 ? targetLeft + 20 : targetLeft,
+            right: targetRight,
             duration: 1.2,
             ease: "power3.out",
             onComplete: resolve,
-          }
+          },
+          "<"
         );
       });
 
@@ -163,24 +178,10 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         });
       });
 
-      // Scale model to fill viewport
-      await new Promise<void>((resolve) => {
-        tl.to(model, {
-          left: 0,
-          top: 0,
-          width: "100%",
-          height: "100%",
-          duration: 0.8,
-          ease: "power2.inOut",
-          onComplete: resolve,
-        });
-      });
-
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 400));
       onComplete();
     };
 
-    // Start cursor offscreen left
     gsap.set(cursor, { left: -30, top: container.clientHeight / 2 });
 
     tl.to(cursor, {
@@ -204,8 +205,9 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
     >
       <MacCursor ref={cursorRef} />
 
-      {/* Typed text (placeholder then title) */}
-      <div className="absolute inset-0 flex items-center justify-center pointer-events-none"
+      {/* Typed text */}
+      <div
+        className="absolute inset-0 flex items-center justify-center pointer-events-none"
         style={{ top: phase === "retyping" || titleVisible ? "-10%" : "0" }}
       >
         <div
@@ -216,8 +218,7 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
               : "opacity-100"
           }`}
           style={{
-            fontFamily:
-              "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
+            fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
             color: "hsl(0 0% 10%)",
           }}
         >
@@ -229,7 +230,7 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         </div>
       </div>
 
-      {/* Persistent title after typing */}
+      {/* Persistent title */}
       {titleVisible && (
         <h1
           className="absolute left-1/2 -translate-x-1/2 text-2xl md:text-4xl font-bold tracking-tight text-foreground z-10"
@@ -242,13 +243,9 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
         </h1>
       )}
 
-      {/* Draggable 3D model */}
-      <div
-        ref={modelRef}
-        className="absolute"
-        style={{ opacity: showModel ? 1 : 0 }}
-      >
-        {showModel && (
+      {/* 3D scene background */}
+      {showScene && (
+        <div className="absolute inset-0 animate-fade-in">
           <Canvas
             camera={{ position: [6, 3, 6], fov: 45 }}
             style={{ background: "transparent", width: "100%", height: "100%" }}
@@ -256,14 +253,48 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
             <ambientLight intensity={0.6} />
             <directionalLight position={[10, 10, 5]} intensity={1} />
             <pointLight position={[-5, 5, -5]} intensity={0.4} />
-            <SierpinskiTetrahedron
-              onClickFace={() => {}}
-              level={4}
-            />
+            <SierpinskiTetrahedron onClickFace={() => {}} level={4} />
             <OrbitControls enabled={false} />
             <Environment preset="studio" />
           </Canvas>
-        )}
+        </div>
+      )}
+
+      {/* Lyrics window being dragged in */}
+      <div
+        ref={lyricsRef}
+        className="absolute w-72"
+        style={{ opacity: showLyrics ? 1 : 0 }}
+      >
+        <div className="window-chrome">
+          <div className="window-titlebar">
+            <div className="window-dot window-dot-red" />
+            <div className="window-dot window-dot-yellow" />
+            <div className="window-dot window-dot-green" />
+            <span className="ml-2 text-[11px] text-muted-foreground font-medium">
+              Lyrics
+            </span>
+          </div>
+          <div
+            className="h-[50vh] overflow-hidden px-5 py-4"
+            style={{ background: "hsl(var(--card))" }}
+          >
+            <div>
+              {LYRICS_LINES.map((line, i) => (
+                <p
+                  key={i}
+                  className="text-sm font-semibold mb-3"
+                  style={{
+                    fontFamily: "'SF Pro Display', -apple-system, sans-serif",
+                    color: "hsl(var(--foreground))",
+                  }}
+                >
+                  {line}
+                </p>
+              ))}
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   );
