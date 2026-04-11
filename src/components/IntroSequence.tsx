@@ -258,7 +258,7 @@ const IntroSequence = ({ onComplete }: IntroSequenceProps) => {
             <pointLight position={[-5, 5, -5]} intensity={0.4} />
             <SierpinskiTetrahedron
               onClickFace={() => {}}
-              level={3}
+              level={4}
             />
             <OrbitControls enabled={false} />
             <Environment preset="studio" />
