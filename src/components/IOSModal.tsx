@@ -6,9 +6,10 @@ interface IOSModalProps {
   onClose: () => void;
   title: string;
   caption: string;
+  image?: string;
 }
 
-const IOSModal = ({ isOpen, onClose, title, caption }: IOSModalProps) => {
+const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => {
   const [displayTitle, setDisplayTitle] = useState("");
   const [displayCaption, setDisplayCaption] = useState("");
 
@@ -40,27 +41,42 @@ const IOSModal = ({ isOpen, onClose, title, caption }: IOSModalProps) => {
   if (!isOpen) return null;
 
   return (
-    <div
-      className="absolute bottom-6 right-6 z-40 ios-modal w-72 p-4 animate-scale-in"
-    >
-      <button
-        onClick={onClose}
-        className="absolute top-2 right-2 w-6 h-6 rounded-full bg-muted flex items-center justify-center hover:bg-muted/80 transition-colors"
-      >
-        <X className="w-3 h-3 text-muted-foreground" />
-      </button>
+    <div className="absolute bottom-6 right-6 z-40 ios-modal w-72 animate-scale-in overflow-hidden">
+      {/* Image */}
+      {image && (
+        <img
+          src={image}
+          alt={title}
+          className="w-full h-40 object-cover"
+          loading="lazy"
+          width={288}
+          height={160}
+        />
+      )}
 
-      <h3
-        className="text-sm font-semibold tracking-tight text-foreground mb-1 pr-6"
-        style={{ fontFamily: "-apple-system, 'SF Pro Display', sans-serif" }}
-      >
-        {displayTitle}
-        {displayTitle.length < title.length && <span className="cursor-blink" />}
-      </h3>
-      <p className="text-xs text-muted-foreground leading-relaxed">
-        {displayCaption}
-        {displayCaption.length > 0 && displayCaption.length < caption.length && <span className="cursor-blink" />}
-      </p>
+      {/* Content */}
+      <div className="p-4">
+        <button
+          onClick={onClose}
+          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-foreground/20 backdrop-blur-sm flex items-center justify-center hover:bg-foreground/30 transition-colors"
+        >
+          <X className="w-3 h-3 text-primary-foreground" />
+        </button>
+
+        <h3
+          className="text-sm font-semibold tracking-tight text-foreground mb-1 pr-6"
+          style={{ fontFamily: "-apple-system, 'SF Pro Display', sans-serif" }}
+        >
+          {displayTitle}
+          {displayTitle.length < title.length && <span className="cursor-blink" />}
+        </h3>
+        <p className="text-xs text-muted-foreground leading-relaxed">
+          {displayCaption}
+          {displayCaption.length > 0 && displayCaption.length < caption.length && (
+            <span className="cursor-blink" />
+          )}
+        </p>
+      </div>
     </div>
   );
 };
