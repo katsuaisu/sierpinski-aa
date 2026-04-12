@@ -160,3 +160,15 @@
 .window-dot-red { background: #ff5f57; }
 .window-dot-yellow { background: #febc2e; }
 .window-dot-green { background: #28c840; }
+
+/* Sound bar animation */
+@keyframes soundbar {
+  0% { height: 4px; }
+  100% { height: 16px; }
+}
+
+/* Progress bar animation */
+@keyframes progress {
+  0% { width: 0%; }
+  100% { width: 100%; }
+}
