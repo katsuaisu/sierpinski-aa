@@ -1,6 +1,8 @@
 import { useRef, useMemo, useState } from "react";
 import { useFrame } from "@react-three/fiber";
+import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
+import pic1 from "@/assets/gallery/pic1.png";
 
 interface TetraData {
   vertices: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3];
@@ -35,6 +37,8 @@ function sierpinskiTetra(
   ];
 }
 
+const TEXTURE_PATHS = [pic1];
+
 function createTetraGeometry(verts: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3]) {
   const [v0, v1, v2, v3] = verts;
   const geo = new THREE.BufferGeometry();
@@ -51,7 +55,19 @@ function createTetraGeometry(verts: [THREE.Vector3, THREE.Vector3, THREE.Vector3
     v1.x, v1.y, v1.z, v2.x, v2.y, v2.z, v3.x, v3.y, v3.z,
   ]);
 
+  const uvs = new Float32Array([
+    // face 0
+    0.5, 1, 0, 0, 1, 0,
+    // face 1
+    0.5, 1, 0, 0, 1, 0,
+    // face 2
+    0.5, 1, 0, 0, 1, 0,
+    // face 3
+    0.5, 1, 0, 0, 1, 0,
+  ]);
+
   geo.setAttribute("position", new THREE.BufferAttribute(positions, 3));
+  geo.setAttribute("uv", new THREE.BufferAttribute(uvs, 2));
   geo.computeVertexNormals();
   return geo;
 }
@@ -63,6 +79,8 @@ interface SingleTetraProps {
 
 const SingleTetra = ({ data, onClickFace }: SingleTetraProps) => {
   const [hovered, setHovered] = useState(false);
+  const textures = useTexture(TEXTURE_PATHS);
+  const texture = data.id === 1 ? textures[0] : undefined;
   const geo = useMemo(() => createTetraGeometry(data.vertices), [data.vertices]);
 
   const center = useMemo(() => {
@@ -80,12 +98,14 @@ const SingleTetra = ({ data, onClickFace }: SingleTetraProps) => {
       onPointerLeave={() => { setHovered(false); document.body.style.cursor = "default"; }}
     >
       <meshPhysicalMaterial
-        color={hovered ? "#007AFF" : "#d4d4d8"}
+        map={texture}
+        color="#ffffff"
         metalness={0.08}
-        roughness={0.45}
+        roughness={hovered ? 0.3 : 0.45}
         transparent
-        opacity={0.93}
+        opacity={0.96}
         side={THREE.DoubleSide}
+        toneMapped={false}
       />
     </mesh>
   );

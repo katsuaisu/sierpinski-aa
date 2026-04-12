@@ -5,18 +5,34 @@ import * as THREE from "three";
 import SierpinskiTetrahedron from "./SierpinskiTetrahedron";
 import IOSModal from "./IOSModal";
 
-import img1 from "@/assets/gallery/img1.jpg";
-import img2 from "@/assets/gallery/img2.jpg";
-import img3 from "@/assets/gallery/img3.jpg";
-import img4 from "@/assets/gallery/img4.jpg";
-import img5 from "@/assets/gallery/img5.jpg";
+import pic1 from "@/assets/gallery/pic1.png";
 
 const GALLERY_ITEMS = [
-  { title: "Vertex Alpha", caption: "The origin point where recursion begins.", image: img1 },
-  { title: "Fractal Edge", caption: "The boundary between void and form.", image: img2 },
-  { title: "Recursive Depth", caption: "Level 4: 256 tetrahedra in harmony.", image: img3 },
-  { title: "Geometric Harmony", caption: "Mathematics rendered as art.", image: img4 },
-  { title: "Infinite Descent", caption: "Zoom in and find the same pattern.", image: img5 },
+  {
+    title: "So, who do I really risk this all for?",
+    caption: "All the work I've done I dedicate all to myself. This risk is for you, Rei.",
+    image: pic1,
+  },
+  {
+    title: "Pic 2: Second Tier",
+    caption: "A balanced surface where recursion begins to repeat, now visible through the overlay.",
+    image: "/gallery/pic2.png",
+  },
+  {
+    title: "Pic 3: Third Layer",
+    caption: "Each face reveals a smaller copy of the original form, with its own unique artwork.",
+    image: "/gallery/pic3.png",
+  },
+  {
+    title: "Pic 4: Lower Geometry",
+    caption: "The depth grows with each subdivision, forming new boundaries and textures.",
+    image: "/gallery/pic4.png",
+  },
+  {
+    title: "Pic 5: Base Horizon",
+    caption: "The final row of triangles anchors the fractal’s descent, complete with its own picture.",
+    image: "/gallery/pic5.png",
+  },
 ];
 
 const SceneWindow = () => {
@@ -24,7 +40,7 @@ const SceneWindow = () => {
   const [modalContent, setModalContent] = useState({ title: "", caption: "", image: "" });
 
   const handleClickFace = (id: number, _position: THREE.Vector3) => {
-    const item = GALLERY_ITEMS[id % GALLERY_ITEMS.length];
+    const item = GALLERY_ITEMS[(id - 1) % GALLERY_ITEMS.length];
     setModalContent(item);
     setModalOpen(true);
   };

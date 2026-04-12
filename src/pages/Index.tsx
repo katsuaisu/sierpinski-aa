@@ -1,8 +1,9 @@
-import { useRef, useState } from "react";
+import { useRef, useState, useEffect } from "react";
 import IntroSequence from "@/components/IntroSequence";
 import SceneWindow from "@/components/SceneWindow";
 import LyricsPanel from "@/components/LyricsPanel";
 import NowPlayingWindow from "@/components/NowPlayingWindow";
+import riskItAllAudio from "../../riskitall.mp3";
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
@@ -12,9 +13,65 @@ const Index = () => {
   const sceneRef = useRef<HTMLDivElement>(null);
   const lyricsRef = useRef<HTMLDivElement>(null);
   const nowPlayingRef = useRef<HTMLDivElement>(null);
+  const audioRef = useRef<HTMLAudioElement>(null);
+
+  useEffect(() => {
+    const audioEl = audioRef.current;
+    if (!audioEl) return;
+
+    audioEl.preload = "auto";
+    audioEl.load();
+
+    const attemptPlay = () => {
+      audioEl.currentTime = 0;
+      audioEl.muted = true;
+      audioEl
+        .play()
+        .then(() => {
+          audioEl.muted = false;
+        })
+        .catch((error) => {
+          console.log("Audio autoplay blocked, will try after interaction:", error);
+          audioEl.muted = false;
+        });
+    };
+
+    const handleInteraction = () => {
+      if (audioEl.paused || audioEl.muted) {
+        audioEl.muted = false;
+        audioEl.play().catch(() => { });
+      }
+    };
+
+    attemptPlay();
+    audioEl.addEventListener("loadeddata", attemptPlay, { once: true });
+
+    window.addEventListener("click", handleInteraction, { once: true });
+    window.addEventListener("mousedown", handleInteraction, { once: true });
+    window.addEventListener("touchstart", handleInteraction, { once: true });
+    window.addEventListener("keydown", handleInteraction, { once: true });
+
+    return () => {
+      audioEl.removeEventListener("loadeddata", attemptPlay);
+      window.removeEventListener("click", handleInteraction);
+      window.removeEventListener("mousedown", handleInteraction);
+      window.removeEventListener("touchstart", handleInteraction);
+      window.removeEventListener("keydown", handleInteraction);
+    };
+  }, []);
 
   return (
     <div className="relative w-screen h-screen dot-grid-bg overflow-hidden">
+      {/* Audio element */}
+      <audio
+        ref={audioRef}
+        src={riskItAllAudio}
+        autoPlay
+        playsInline
+        loop
+        preload="auto"
+        style={{ display: "none" }}
+      />
       {/* Title - shown after intro types it */}
       {sceneVisible && (
         <h1

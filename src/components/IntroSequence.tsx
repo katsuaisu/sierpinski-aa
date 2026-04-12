@@ -121,10 +121,11 @@ const IntroSequence = ({
       setPhase("dragging");
 
       // === Drag 1: 3D Model from the right ===
-      onShowScene();
       const sceneEl = sceneRef.current;
       if (sceneEl) {
         gsap.set(sceneEl, { x: w, opacity: 0 });
+        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        onShowScene();
 
         // Cursor goes off-screen right
         await new Promise<void>((resolve) => {
@@ -141,10 +142,11 @@ const IntroSequence = ({
       await new Promise((r) => setTimeout(r, 150));
 
       // === Drag 2: Lyrics window from the right ===
-      onShowLyrics();
       const lyricsEl = lyricsRef.current;
       if (lyricsEl) {
         gsap.set(lyricsEl, { x: w + 320, opacity: 0 });
+        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        onShowLyrics();
 
         // Cursor exits right
         await new Promise<void>((resolve) => {
@@ -161,10 +163,11 @@ const IntroSequence = ({
       await new Promise((r) => setTimeout(r, 150));
 
       // === Drag 3: Now Playing window from the right ===
-      onShowNowPlaying();
       const npEl = nowPlayingRef.current;
       if (npEl) {
         gsap.set(npEl, { x: w + 400, opacity: 0 });
+        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        onShowNowPlaying();
 
         // Cursor exits right
         await new Promise<void>((resolve) => {
@@ -224,9 +227,8 @@ const IntroSequence = ({
         >
           <div
             ref={textRef}
-            className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-500 ${
-              phase === "dissolving" ? "opacity-0 scale-95 blur-sm" : "opacity-100"
-            }`}
+            className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-500 ${phase === "dissolving" ? "opacity-0 scale-95 blur-sm" : "opacity-100"
+              }`}
             style={{
               fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
               color: "hsl(0 0% 10%)",

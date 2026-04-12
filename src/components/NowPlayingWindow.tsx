@@ -1,3 +1,5 @@
+import riskItAll from "../assets/riskitall.png";
+
 const NowPlayingWindow = () => {
   return (
     <div className="w-72">
@@ -14,7 +16,7 @@ const NowPlayingWindow = () => {
           className="px-4 py-3 flex items-center gap-3"
           style={{ background: "hsl(var(--card))" }}
         >
-          {/* Album art - will be riskitall.png */}
+          {/* Album art - riskitall.png */}
           <div
             className="w-12 h-12 rounded-lg flex-shrink-0 overflow-hidden"
             style={{
@@ -22,7 +24,7 @@ const NowPlayingWindow = () => {
             }}
           >
             <img
-              src="/riskitall.png"
+              src={riskItAll}
               alt="Risk It All"
               className="w-full h-full object-cover"
               onError={(e) => {

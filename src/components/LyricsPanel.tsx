@@ -57,10 +57,11 @@ const LyricsPanel = ({ embedded }: LyricsPanelProps) => {
     if (!el) return;
 
     let animFrame: number;
+    let startTimeout: ReturnType<typeof setTimeout>;
     let scrollPos = 0;
 
     const scroll = () => {
-      scrollPos += 0.4;
+      scrollPos += 0.14;
       if (scrollPos >= el.scrollHeight - el.clientHeight) {
         scrollPos = 0;
       }
@@ -68,8 +69,14 @@ const LyricsPanel = ({ embedded }: LyricsPanelProps) => {
       animFrame = requestAnimationFrame(scroll);
     };
 
-    animFrame = requestAnimationFrame(scroll);
-    return () => cancelAnimationFrame(animFrame);
+    startTimeout = window.setTimeout(() => {
+      animFrame = requestAnimationFrame(scroll);
+    }, 30000);
+
+    return () => {
+      window.clearTimeout(startTimeout);
+      cancelAnimationFrame(animFrame);
+    };
   }, []);
 
   const content = (
@@ -91,9 +98,8 @@ const LyricsPanel = ({ embedded }: LyricsPanelProps) => {
             {LINES.map((line, i) => (
               <p
                 key={i}
-                className={`text-sm md:text-base font-semibold mb-3 ${
-                  line === "" ? "h-6" : ""
-                }`}
+                className={`text-sm md:text-base font-semibold mb-3 ${line === "" ? "h-6" : ""
+                  }`}
                 style={{
                   fontFamily: "'SF Pro Display', -apple-system, sans-serif",
                   color: "hsl(var(--foreground))",
@@ -105,9 +111,8 @@ const LyricsPanel = ({ embedded }: LyricsPanelProps) => {
             {LINES.map((line, i) => (
               <p
                 key={`repeat-${i}`}
-                className={`text-sm md:text-base font-semibold mb-3 ${
-                  line === "" ? "h-6" : ""
-                }`}
+                className={`text-sm md:text-base font-semibold mb-3 ${line === "" ? "h-6" : ""
+                  }`}
                 style={{
                   fontFamily: "'SF Pro Display', -apple-system, sans-serif",
                   color: "hsl(var(--foreground))",

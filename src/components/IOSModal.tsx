@@ -67,6 +67,9 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
             loading="lazy"
             width={288}
             height={160}
+            onError={(e) => {
+              (e.target as HTMLImageElement).style.display = "none";
+            }}
           />
         )}
 
