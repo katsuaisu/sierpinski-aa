@@ -57,21 +57,23 @@ const IntroSequence = ({
     if (!cursor || !textEl || !container || !bg) return;
 
     const tl = gsap.timeline();
+    const w = container.clientWidth;
+    const h = container.clientHeight;
 
     const run = async () => {
       // Phase 1: Type placeholder
       await typeText(PLACEHOLDER_TEXT);
       await new Promise((r) => setTimeout(r, 400));
 
-      // Phase 2: Move cursor to text
+      // Phase 2: Move cursor to text end
       const rect = textEl.getBoundingClientRect();
-      const containerRect = container.getBoundingClientRect();
+      const cRect = container.getBoundingClientRect();
 
       setPhase("selecting");
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
-          left: rect.right - containerRect.left + 5,
-          top: rect.top - containerRect.top + rect.height / 2 - 5,
+          left: rect.right - cRect.left + 5,
+          top: rect.top - cRect.top + rect.height / 2 - 5,
           duration: 0.6,
           ease: "power2.inOut",
           onComplete: resolve,
@@ -81,13 +83,10 @@ const IntroSequence = ({
       // Phase 3: Select text
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
-          left: rect.left - containerRect.left - 5,
+          left: rect.left - cRect.left - 5,
           duration: 0.5,
           ease: "power2.inOut",
-          onComplete: () => {
-            setIsSelected(true);
-            resolve();
-          },
+          onComplete: () => { setIsSelected(true); resolve(); },
         });
       });
 
@@ -96,15 +95,14 @@ const IntroSequence = ({
       // Phase 4: Dissolve
       setPhase("dissolving");
       await new Promise((r) => setTimeout(r, 600));
-
       setDisplayText("");
       setIsSelected(false);
       setPhase("retyping");
 
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
-          left: container.clientWidth / 2 - 100,
-          top: container.clientHeight / 2 - 40,
+          left: w / 2 - 100,
+          top: h / 2 - 40,
           duration: 0.4,
           ease: "power2.inOut",
           onComplete: resolve,
@@ -114,97 +112,69 @@ const IntroSequence = ({
       // Phase 5: Type main title
       await typeText(MAIN_TITLE);
       await new Promise((r) => setTimeout(r, 600));
-
       setTitleVisible(true);
       setDisplayText("");
 
-      // Fade out the white background
-      gsap.to(bg, { opacity: 0, duration: 0.8, ease: "power2.out" });
+      // Fade out white background
+      tl.to(bg, { opacity: 0, duration: 0.6, ease: "power2.out" });
 
-      // Phase 6: Cursor exits right to grab the 3D model
       setPhase("dragging");
-      await new Promise<void>((resolve) => {
-        tl.to(cursor, {
-          left: container.clientWidth + 50,
-          top: container.clientHeight * 0.4,
-          duration: 0.6,
-          ease: "power2.in",
-          onComplete: resolve,
-        });
-      });
 
-      // Show and animate 3D scene sliding in
+      // === Drag 1: 3D Model from the right ===
       onShowScene();
       const sceneEl = sceneRef.current;
       if (sceneEl) {
-        gsap.set(sceneEl, { x: "110%", opacity: 0 });
+        gsap.set(sceneEl, { x: w, opacity: 0 });
+
+        // Cursor goes off-screen right
         await new Promise<void>((resolve) => {
-          tl.to(cursor, {
-            left: container.clientWidth * 0.5,
-            duration: 1.2,
-            ease: "power3.out",
-          });
-          tl.to(
-            sceneEl,
-            { x: "0%", opacity: 1, duration: 1.2, ease: "power3.out", onComplete: resolve },
-            "<"
-          );
+          tl.to(cursor, { left: w + 30, top: h * 0.4, duration: 0.4, ease: "power2.in", onComplete: resolve });
+        });
+
+        // Cursor drags scene in from right to center
+        await new Promise<void>((resolve) => {
+          tl.to(cursor, { left: w * 0.55, top: h * 0.45, duration: 1.0, ease: "power3.out" });
+          tl.to(sceneEl, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 150));
 
-      // Phase 7: Cursor exits right to grab lyrics
-      await new Promise<void>((resolve) => {
-        tl.to(cursor, {
-          left: container.clientWidth + 50,
-          top: container.clientHeight * 0.3,
-          duration: 0.5,
-          ease: "power2.in",
-          onComplete: resolve,
-        });
-      });
-
-      // Show and animate lyrics sliding in
+      // === Drag 2: Lyrics window from the right ===
       onShowLyrics();
       const lyricsEl = lyricsRef.current;
       if (lyricsEl) {
-        gsap.set(lyricsEl, { x: "calc(100vw + 320px)", opacity: 0 });
+        gsap.set(lyricsEl, { x: w + 320, opacity: 0 });
+
+        // Cursor exits right
         await new Promise<void>((resolve) => {
-          tl.to(cursor, { left: 60, duration: 1.0, ease: "power3.out" });
-          tl.to(
-            lyricsEl,
-            { x: "0%", opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve },
-            "<"
-          );
+          tl.to(cursor, { left: w + 30, top: h * 0.35, duration: 0.35, ease: "power2.in", onComplete: resolve });
+        });
+
+        // Cursor drags lyrics in to left side
+        await new Promise<void>((resolve) => {
+          tl.to(cursor, { left: 80, top: h * 0.4, duration: 0.9, ease: "power3.out" });
+          tl.to(lyricsEl, { x: 0, opacity: 1, duration: 0.9, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise((r) => setTimeout(r, 150));
 
-      // Phase 8: Cursor exits right to grab now playing
-      await new Promise<void>((resolve) => {
-        tl.to(cursor, {
-          left: container.clientWidth + 50,
-          top: container.clientHeight * 0.85,
-          duration: 0.5,
-          ease: "power2.in",
-          onComplete: resolve,
-        });
-      });
-
-      // Show and animate now playing sliding in
+      // === Drag 3: Now Playing window from the right ===
       onShowNowPlaying();
       const npEl = nowPlayingRef.current;
       if (npEl) {
-        gsap.set(npEl, { x: "calc(100vw + 400px)", opacity: 0 });
+        gsap.set(npEl, { x: w + 400, opacity: 0 });
+
+        // Cursor exits right
         await new Promise<void>((resolve) => {
-          tl.to(cursor, { left: 40, top: container.clientHeight * 0.9, duration: 1.0, ease: "power3.out" });
-          tl.to(
-            npEl,
-            { x: "0%", opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve },
-            "<"
-          );
+          tl.to(cursor, { left: w + 30, top: h * 0.88, duration: 0.35, ease: "power2.in", onComplete: resolve });
+        });
+
+        // Cursor drags now playing in to bottom-left
+        await new Promise<void>((resolve) => {
+          tl.to(cursor, { left: 50, top: h * 0.9, duration: 0.9, ease: "power3.out" });
+          tl.to(npEl, { x: 0, opacity: 1, duration: 0.9, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
@@ -212,31 +182,24 @@ const IntroSequence = ({
 
       // Cursor exits upward
       await new Promise<void>((resolve) => {
-        tl.to(cursor, {
-          top: -40,
-          duration: 0.5,
-          ease: "power2.in",
-          onComplete: resolve,
-        });
+        tl.to(cursor, { top: -40, duration: 0.4, ease: "power2.in", onComplete: resolve });
       });
 
       await new Promise((r) => setTimeout(r, 300));
       onComplete();
     };
 
-    gsap.set(cursor, { left: -30, top: container.clientHeight / 2 });
+    gsap.set(cursor, { left: -30, top: h / 2 });
 
     tl.to(cursor, {
-      left: container.clientWidth / 2 + 80,
-      top: container.clientHeight / 2 - 5,
+      left: w / 2 + 80,
+      top: h / 2 - 5,
       duration: 0.8,
       ease: "power2.out",
       onComplete: () => run(),
     });
 
-    return () => {
-      tl.kill();
-    };
+    return () => { tl.kill(); };
   }, []); // eslint-disable-line react-hooks/exhaustive-deps
 
   return (
@@ -262,9 +225,7 @@ const IntroSequence = ({
           <div
             ref={textRef}
             className={`text-2xl md:text-4xl font-bold tracking-tight transition-all duration-500 ${
-              phase === "dissolving"
-                ? "opacity-0 scale-95 blur-sm"
-                : "opacity-100"
+              phase === "dissolving" ? "opacity-0 scale-95 blur-sm" : "opacity-100"
             }`}
             style={{
               fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
