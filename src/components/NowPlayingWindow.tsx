@@ -1,6 +1,6 @@
 const NowPlayingWindow = () => {
   return (
-    <div className="w-80">
+    <div className="w-72">
       <div className="window-chrome">
         <div className="window-titlebar">
           <div className="window-dot window-dot-red" />
@@ -14,14 +14,21 @@ const NowPlayingWindow = () => {
           className="px-4 py-3 flex items-center gap-3"
           style={{ background: "hsl(var(--card))" }}
         >
-          {/* Album art placeholder */}
+          {/* Album art - will be riskitall.png */}
           <div
-            className="w-12 h-12 rounded-lg flex-shrink-0 flex items-center justify-center"
+            className="w-12 h-12 rounded-lg flex-shrink-0 overflow-hidden"
             style={{
               background: "linear-gradient(135deg, hsl(350 80% 55%), hsl(20 90% 55%))",
             }}
           >
-            <span className="text-lg">🎵</span>
+            <img
+              src="/riskitall.png"
+              alt="Risk It All"
+              className="w-full h-full object-cover"
+              onError={(e) => {
+                (e.target as HTMLImageElement).style.display = "none";
+              }}
+            />
           </div>
 
           {/* Track info */}
@@ -41,27 +48,18 @@ const NowPlayingWindow = () => {
           </div>
 
           {/* Playback indicator */}
-          <div className="flex items-center gap-[2px]">
-            {[0, 1, 2, 3].map((i) => (
-              <div
-                key={i}
-                className="w-[3px] rounded-full bg-primary"
-                style={{
-                  height: `${10 + Math.random() * 8}px`,
-                  animation: `soundbar 0.6s ${i * 0.15}s ease-in-out infinite alternate`,
-                }}
-              />
-            ))}
+          <div className="flex items-end gap-[2px] h-4">
+            <div className="soundbar-bar" style={{ animationDelay: "0s" }} />
+            <div className="soundbar-bar" style={{ animationDelay: "0.15s" }} />
+            <div className="soundbar-bar" style={{ animationDelay: "0.3s" }} />
+            <div className="soundbar-bar" style={{ animationDelay: "0.45s" }} />
           </div>
         </div>
 
         {/* Progress bar */}
         <div className="px-4 pb-3" style={{ background: "hsl(var(--card))" }}>
           <div className="w-full h-[3px] rounded-full" style={{ background: "hsl(var(--muted))" }}>
-            <div
-              className="h-full rounded-full bg-primary"
-              style={{ width: "35%", animation: "progress 120s linear infinite" }}
-            />
+            <div className="h-full rounded-full bg-primary progress-bar" />
           </div>
           <div className="flex justify-between mt-1">
             <span className="text-[10px] text-muted-foreground">1:12</span>

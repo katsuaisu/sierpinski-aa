@@ -41,41 +41,54 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
   if (!isOpen) return null;
 
   return (
-    <div className="absolute bottom-6 right-6 z-40 ios-modal w-72 animate-scale-in overflow-hidden">
-      {/* Image */}
-      {image && (
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-40 object-cover"
-          loading="lazy"
-          width={288}
-          height={160}
-        />
-      )}
+    <div className="absolute bottom-6 right-6 z-40 w-72 animate-scale-in">
+      <div className="window-chrome">
+        <div className="window-titlebar">
+          <div className="window-dot window-dot-red" />
+          <div className="window-dot window-dot-yellow" />
+          <div className="window-dot window-dot-green" />
+          <span className="ml-2 text-[11px] text-muted-foreground font-medium">
+            Description
+          </span>
+          <button
+            onClick={onClose}
+            className="ml-auto w-5 h-5 rounded-full flex items-center justify-center hover:bg-muted transition-colors"
+          >
+            <X className="w-3 h-3 text-muted-foreground" />
+          </button>
+        </div>
 
-      {/* Content */}
-      <div className="p-4">
-        <button
-          onClick={onClose}
-          className="absolute top-2 right-2 w-6 h-6 rounded-full bg-foreground/20 backdrop-blur-sm flex items-center justify-center hover:bg-foreground/30 transition-colors"
-        >
-          <X className="w-3 h-3 text-primary-foreground" />
-        </button>
+        {/* Image */}
+        {image && (
+          <img
+            src={image}
+            alt={title}
+            className="w-full h-40 object-cover"
+            loading="lazy"
+            width={288}
+            height={160}
+          />
+        )}
 
-        <h3
-          className="text-sm font-semibold tracking-tight text-foreground mb-1 pr-6"
-          style={{ fontFamily: "-apple-system, 'SF Pro Display', sans-serif" }}
-        >
-          {displayTitle}
-          {displayTitle.length < title.length && <span className="cursor-blink" />}
-        </h3>
-        <p className="text-xs text-muted-foreground leading-relaxed">
-          {displayCaption}
-          {displayCaption.length > 0 && displayCaption.length < caption.length && (
-            <span className="cursor-blink" />
-          )}
-        </p>
+        {/* Content */}
+        <div className="p-4" style={{ background: "hsl(var(--card))" }}>
+          <h3
+            className="text-sm font-semibold tracking-tight mb-1"
+            style={{
+              fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
+              color: "hsl(var(--foreground))",
+            }}
+          >
+            {displayTitle}
+            {displayTitle.length < title.length && <span className="cursor-blink" />}
+          </h3>
+          <p className="text-xs text-muted-foreground leading-relaxed">
+            {displayCaption}
+            {displayCaption.length > 0 && displayCaption.length < caption.length && (
+              <span className="cursor-blink" />
+            )}
+          </p>
+        </div>
       </div>
     </div>
   );
