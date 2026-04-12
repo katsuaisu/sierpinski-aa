@@ -5,8 +5,10 @@ import MacCursor from "./MacCursor";
 interface IntroSequenceProps {
   sceneRef: RefObject<HTMLDivElement>;
   lyricsRef: RefObject<HTMLDivElement>;
+  nowPlayingRef: RefObject<HTMLDivElement>;
   onShowScene: () => void;
   onShowLyrics: () => void;
+  onShowNowPlaying: () => void;
   onComplete: () => void;
 }
 
@@ -16,13 +18,16 @@ const MAIN_TITLE = "4Q-AA: Sierpinski's Triangle";
 const IntroSequence = ({
   sceneRef,
   lyricsRef,
+  nowPlayingRef,
   onShowScene,
   onShowLyrics,
+  onShowNowPlaying,
   onComplete,
 }: IntroSequenceProps) => {
   const cursorRef = useRef<HTMLDivElement>(null);
   const textRef = useRef<HTMLDivElement>(null);
   const containerRef = useRef<HTMLDivElement>(null);
+  const bgRef = useRef<HTMLDivElement>(null);
   const [displayText, setDisplayText] = useState("");
   const [phase, setPhase] = useState<
     "typing" | "selecting" | "dissolving" | "retyping" | "dragging" | "done"
@@ -48,7 +53,8 @@ const IntroSequence = ({
     const cursor = cursorRef.current;
     const textEl = textRef.current;
     const container = containerRef.current;
-    if (!cursor || !textEl || !container) return;
+    const bg = bgRef.current;
+    if (!cursor || !textEl || !container || !bg) return;
 
     const tl = gsap.timeline();
 
@@ -112,7 +118,10 @@ const IntroSequence = ({
       setTitleVisible(true);
       setDisplayText("");
 
-      // Phase 6: Cursor exits right to "grab" the 3D model
+      // Fade out the white background
+      gsap.to(bg, { opacity: 0, duration: 0.8, ease: "power2.out" });
+
+      // Phase 6: Cursor exits right to grab the 3D model
       setPhase("dragging");
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
@@ -124,10 +133,8 @@ const IntroSequence = ({
         });
       });
 
-      // Show the 3D scene (starts off-screen right via CSS)
+      // Show and animate 3D scene sliding in
       onShowScene();
-
-      // Animate the scene container sliding in from right
       const sceneEl = sceneRef.current;
       if (sceneEl) {
         gsap.set(sceneEl, { x: "110%", opacity: 0 });
@@ -139,21 +146,15 @@ const IntroSequence = ({
           });
           tl.to(
             sceneEl,
-            {
-              x: "0%",
-              opacity: 1,
-              duration: 1.2,
-              ease: "power3.out",
-              onComplete: resolve,
-            },
+            { x: "0%", opacity: 1, duration: 1.2, ease: "power3.out", onComplete: resolve },
             "<"
           );
         });
       }
 
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 200));
 
-      // Phase 7: Cursor exits right again to grab lyrics
+      // Phase 7: Cursor exits right to grab lyrics
       await new Promise<void>((resolve) => {
         tl.to(cursor, {
           left: container.clientWidth + 50,
@@ -164,33 +165,50 @@ const IntroSequence = ({
         });
       });
 
-      // Show lyrics (starts off-screen right via CSS)
+      // Show and animate lyrics sliding in
       onShowLyrics();
-
       const lyricsEl = lyricsRef.current;
       if (lyricsEl) {
         gsap.set(lyricsEl, { x: "calc(100vw + 320px)", opacity: 0 });
         await new Promise<void>((resolve) => {
-          tl.to(cursor, {
-            left: 60,
-            duration: 1.0,
-            ease: "power3.out",
-          });
+          tl.to(cursor, { left: 60, duration: 1.0, ease: "power3.out" });
           tl.to(
             lyricsEl,
-            {
-              x: "0%",
-              opacity: 1,
-              duration: 1.0,
-              ease: "power3.out",
-              onComplete: resolve,
-            },
+            { x: "0%", opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve },
             "<"
           );
         });
       }
 
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise((r) => setTimeout(r, 200));
+
+      // Phase 8: Cursor exits right to grab now playing
+      await new Promise<void>((resolve) => {
+        tl.to(cursor, {
+          left: container.clientWidth + 50,
+          top: container.clientHeight * 0.85,
+          duration: 0.5,
+          ease: "power2.in",
+          onComplete: resolve,
+        });
+      });
+
+      // Show and animate now playing sliding in
+      onShowNowPlaying();
+      const npEl = nowPlayingRef.current;
+      if (npEl) {
+        gsap.set(npEl, { x: "calc(100vw + 400px)", opacity: 0 });
+        await new Promise<void>((resolve) => {
+          tl.to(cursor, { left: 40, top: container.clientHeight * 0.9, duration: 1.0, ease: "power3.out" });
+          tl.to(
+            npEl,
+            { x: "0%", opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve },
+            "<"
+          );
+        });
+      }
+
+      await new Promise((r) => setTimeout(r, 200));
 
       // Cursor exits upward
       await new Promise<void>((resolve) => {
@@ -202,7 +220,7 @@ const IntroSequence = ({
         });
       });
 
-      await new Promise((r) => setTimeout(r, 400));
+      await new Promise((r) => setTimeout(r, 300));
       onComplete();
     };
 
@@ -225,14 +243,20 @@ const IntroSequence = ({
     <div
       ref={containerRef}
       className="fixed inset-0 z-50 overflow-hidden pointer-events-none"
-      style={{ background: phase === "dragging" || titleVisible ? "transparent" : "hsl(0 0% 97%)" }}
     >
+      {/* White background that fades out */}
+      <div
+        ref={bgRef}
+        className="absolute inset-0 dot-grid-bg"
+        style={{ background: "hsl(0 0% 97%)" }}
+      />
+
       <MacCursor ref={cursorRef} />
 
       {/* Typed text */}
       {!titleVisible && (
         <div
-          className="absolute inset-0 flex items-center justify-center"
+          className="absolute inset-0 flex items-center justify-center z-10"
           style={{ top: phase === "retyping" ? "-10%" : "0" }}
         >
           <div
@@ -243,8 +267,7 @@ const IntroSequence = ({
                 : "opacity-100"
             }`}
             style={{
-              fontFamily:
-                "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
+              fontFamily: "-apple-system, BlinkMacSystemFont, 'SF Pro Display', sans-serif",
               color: "hsl(0 0% 10%)",
             }}
           >
