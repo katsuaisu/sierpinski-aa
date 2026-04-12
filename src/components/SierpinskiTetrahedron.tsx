@@ -3,6 +3,22 @@ import { useFrame } from "@react-three/fiber";
 import { useTexture } from "@react-three/drei";
 import * as THREE from "three";
 import pic1 from "@/assets/gallery/pic1.png";
+import pic2 from "@/assets/gallery/pic2.png";
+import pic3 from "@/assets/gallery/pic3.png";
+import pic4 from "@/assets/gallery/pic4.png";
+import pic5 from "@/assets/gallery/pic5.png";
+import pic6 from "@/assets/gallery/pic6.png";
+import pic7 from "@/assets/gallery/pic7.png";
+import pic8 from "@/assets/gallery/pic8.png";
+import pic9 from "@/assets/gallery/pic9.png";
+import pic10 from "@/assets/gallery/pic10.png";
+import pic11 from "@/assets/gallery/pic11.png";
+import pic12 from "@/assets/gallery/pic12.png";
+import pic13 from "@/assets/gallery/pic13.png";
+import pic14 from "@/assets/gallery/pic14.png";
+import pic15 from "@/assets/gallery/pic15.png";
+import pic16 from "@/assets/gallery/pic16.png";
+import pic17 from "@/assets/gallery/pic17.png";
 
 interface TetraData {
   vertices: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3];
@@ -37,7 +53,7 @@ function sierpinskiTetra(
   ];
 }
 
-const TEXTURE_PATHS = [pic1];
+const TEXTURE_PATHS = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17];
 
 function createTetraGeometry(verts: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3]) {
   const [v0, v1, v2, v3] = verts;
@@ -80,7 +96,8 @@ interface SingleTetraProps {
 const SingleTetra = ({ data, onClickFace }: SingleTetraProps) => {
   const [hovered, setHovered] = useState(false);
   const textures = useTexture(TEXTURE_PATHS);
-  const texture = data.id === 1 ? textures[0] : undefined;
+  const textureIndex = (data.id - 1) % TEXTURE_PATHS.length;
+  const texture = textures[textureIndex];
   const geo = useMemo(() => createTetraGeometry(data.vertices), [data.vertices]);
 
   const center = useMemo(() => {

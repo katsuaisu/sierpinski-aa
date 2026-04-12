@@ -1,4 +1,3 @@
-import { useEffect, useState } from "react";
 import { X } from "lucide-react";
 
 interface IOSModalProps {
@@ -10,34 +9,6 @@ interface IOSModalProps {
 }
 
 const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => {
-  const [displayTitle, setDisplayTitle] = useState("");
-  const [displayCaption, setDisplayCaption] = useState("");
-
-  useEffect(() => {
-    if (!isOpen) {
-      setDisplayTitle("");
-      setDisplayCaption("");
-      return;
-    }
-
-    let i = 0;
-    const titleInterval = setInterval(() => {
-      setDisplayTitle(title.slice(0, i + 1));
-      i++;
-      if (i >= title.length) {
-        clearInterval(titleInterval);
-        let j = 0;
-        const captionInterval = setInterval(() => {
-          setDisplayCaption(caption.slice(0, j + 1));
-          j++;
-          if (j >= caption.length) clearInterval(captionInterval);
-        }, 25);
-      }
-    }, 40);
-
-    return () => clearInterval(titleInterval);
-  }, [isOpen, title, caption]);
-
   if (!isOpen) return null;
 
   return (
@@ -63,10 +34,8 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
           <img
             src={image}
             alt={title}
-            className="w-full h-40 object-cover"
+            className="w-full h-auto object-contain max-h-96"
             loading="lazy"
-            width={288}
-            height={160}
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = "none";
             }}
@@ -74,22 +43,18 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
         )}
 
         {/* Content */}
-        <div className="p-4" style={{ background: "hsl(var(--card))" }}>
+        <div className="p-4 max-h-96 overflow-y-auto" style={{ background: "hsl(var(--card))" }}>
           <h3
-            className="text-sm font-semibold tracking-tight mb-1"
+            className="text-sm font-semibold tracking-tight mb-2"
             style={{
               fontFamily: "-apple-system, 'SF Pro Display', sans-serif",
               color: "hsl(var(--foreground))",
             }}
           >
-            {displayTitle}
-            {displayTitle.length < title.length && <span className="cursor-blink" />}
+            {title}
           </h3>
-          <p className="text-xs text-muted-foreground leading-relaxed">
-            {displayCaption}
-            {displayCaption.length > 0 && displayCaption.length < caption.length && (
-              <span className="cursor-blink" />
-            )}
+          <p className="text-xs text-muted-foreground leading-relaxed whitespace-pre-wrap">
+            {caption}
           </p>
         </div>
       </div>
