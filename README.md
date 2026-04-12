@@ -1,3 +1,3 @@
-# Welcome to your Lovable project
+# What do I risk this all for? 
 
-TODO: Document your project here
+4QAA: Sierpinski's Triangle
