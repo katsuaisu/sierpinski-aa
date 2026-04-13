@@ -16,7 +16,6 @@ const NowPlayingWindow = () => {
           className="px-4 py-3 flex items-center gap-3"
           style={{ background: "hsl(var(--card))" }}
         >
-          {/* Album art - riskitall.png */}
           <div
             className="w-12 h-12 rounded-lg flex-shrink-0 overflow-hidden"
             style={{
@@ -33,7 +32,6 @@ const NowPlayingWindow = () => {
             />
           </div>
 
-          {/* Track info */}
           <div className="flex-1 min-w-0">
             <p
               className="text-sm font-semibold truncate"
@@ -49,19 +47,25 @@ const NowPlayingWindow = () => {
             </p>
           </div>
 
-          {/* Playback indicator */}
           <div className="flex items-end gap-[2px] h-4">
-            <div className="soundbar-bar" style={{ animationDelay: "0s" }} />
-            <div className="soundbar-bar" style={{ animationDelay: "0.15s" }} />
-            <div className="soundbar-bar" style={{ animationDelay: "0.3s" }} />
-            <div className="soundbar-bar" style={{ animationDelay: "0.45s" }} />
+            {[0, 0.15, 0.3, 0.45].map((delay, i) => (
+              <div
+                key={i}
+                className="w-[3px] rounded-full"
+                style={{
+                  background: "hsl(var(--primary))",
+                  animation: "soundbar 0.6s ease-in-out infinite alternate",
+                  animationDelay: `${delay}s`,
+                  height: "3px",
+                }}
+              />
+            ))}
           </div>
         </div>
 
-        {/* Progress bar */}
         <div className="px-4 pb-3" style={{ background: "hsl(var(--card))" }}>
           <div className="w-full h-[3px] rounded-full" style={{ background: "hsl(var(--muted))" }}>
-            <div className="h-full rounded-full bg-primary progress-bar" />
+            <div className="h-full rounded-full progress-bar" style={{ background: "hsl(var(--primary))" }} />
           </div>
           <div className="flex justify-between mt-1">
             <span className="text-[10px] text-muted-foreground">1:12</span>
