@@ -22,6 +22,16 @@ import pic14 from "@/assets/gallery/pic14.png";
 import pic15 from "@/assets/gallery/pic15.png";
 import pic16 from "@/assets/gallery/pic16.png";
 import pic17 from "@/assets/gallery/pic17.png";
+import pic18 from "@/assets/gallery/pic18.png";
+import pic19 from "@/assets/gallery/pic19.png";
+import pic20 from "@/assets/gallery/pic20.png";
+import pic21 from "@/assets/gallery/pic21.png";
+import pic22 from "@/assets/gallery/pic22.png";
+import pic23 from "@/assets/gallery/pic23.png";
+import pic24 from "@/assets/gallery/pic24.png";
+import pic25 from "@/assets/gallery/pic25.png";
+import pic26 from "@/assets/gallery/pic26.png";
+import pic27 from "@/assets/gallery/pic27.png";
 
 const GALLERY_ITEMS = [
   {
@@ -108,6 +118,56 @@ const GALLERY_ITEMS = [
     title: "My Mom's Car at Night",
     caption: "This was after my first org meeting for Solace. Even though my mom heavily disapproved of my multiple sidequests, she still made an effort to pick me up even if it was very…very late.\n\nI risk it all because I never wanted to disappoint you.",
     image: pic17,
+  },
+  {
+    title: "Math 1 Notice of Removals",
+    caption: "My teeth were digging into the skin of my arm while taking the FE of Math 1 and I was silently praying that I wouldn’t have to go through the pain, the risks, and the burden of removals. Oh well, at least I passed, no?\n\nI risk it all for the version of me whose life fell apart when she received this email.",
+    image: pic18,
+  },
+  {
+    title: "Claw Machine",
+    caption: "This was my ADTech 2 final project—a claw machine, dedicated to my late grandmother who always loved to play whenever we’d go to malls.\n\nI risk it all for you, mama. I miss you everyday.",
+    image: pic19,
+  },
+  {
+    title: "Creativity",
+    caption: "One thing Sir Franel always noticed about me was that I was creative. Amidst all my failures, he always saw the best in me. I even got perfect in all my Math 1 portfolios! :)\n\nI risk it all because I want to see the best in people, the same way it was seen in me.",
+    image: pic20,
+  },
+  {
+    title: "CH27_SAQUING_Reign Mckayla_3QAA",
+    caption: "A certain teacher once told me this portfolio was too dark. The same teacher still greets me every monday and thursdays and reminds me how much I’ve improved from when she first met me.\n\nI risk it all because you never stopped believing in me, even when I had lost hope in myself.",
+    image: pic21,
+  },
+  {
+    title: "Scared",
+    caption: "I’ve always been scared. I don’t think this picture shows it well enough, but I can’t remember a moment in grade 8 where I wasn’t scared. I wish, at that time, someone would tell me that even if it won’t all end up okay, I’d end up anew. I’d end up a person who wasn’t afraid of hiding.\n\nI risk it all because I deserve to find my own sunshine.",
+    image: pic22,
+  },
+  {
+    title: "Recipe for Me",
+    caption: "If I could keep Topaz as a class forever, I could. But then, why would I want to hinder the growth of such talented, loving people? Here’s to the class who made me believe in anything. I love you, topaz. Thank you.\n\nI’d risk it all, and I’d do it all again.",
+    image: pic23,
+  },
+  {
+    title: "Biology Group",
+    caption: "I’ve known Uno and Ruth for about 3 years, but I’ve only gotten the opportunity to get close to them this school year. If I’m being completely honest, I don’t think I would survive this school year–or even life–without them.",
+    image: pic24,
+  },
+  {
+    title: "YMSAT Awarding",
+    caption: "This picture shows me and Uno’s award for the YMSAT Website competition where we won second place. The whole week, I was really anxious because I wanted to be first so badly, and that I was willing to go through any means to do so. He reminded me that win or lose, our hard work would still bear fruit.\n\nI’m always paired with Uno for groupworks. If we ever have a pair activity, we tilt our heads towards each other and laugh in unison. If we ever have a group activity, you’ll find me gravitating towards his chair and scouring for other groupmates. If there’s anyone who understands me, I know it’s him.\n\nIf you’re seeing this: I hate you.\nIf you’re not: Thank you, brother. I love you.\n\nI risk it all because",
+    image: pic25,
+  },
+  {
+    title: "SAYAWIT Awarding",
+    caption: "I got close to Ruth during the second quarter because we were elected co-directors for our class project, Sayawit. I’ve always found her a bit intimidating, but nonetheless, I looked up to her. It was there where I noticed that we share multiple similarities. We have the same struggles, we go to the same exact art conventions, we have the same creative taste, we have the same sentiments, and even the people we like are best friends—which goes to show that even our types are similar.\n\nI’m grateful for Sayawit because it showed me how much I can do—but I’m so much more than thankful that it brought me to you. To many more rants, whether it be about our crushes, acads, or life in general.\n\nI love you, Ruth.\n\nI risk it all because",
+    image: pic26,
+  },
+  {
+    title: "Haraya",
+    caption: "This was after my shift during the fair where I had free time to roam around with my friends. Moments after this, we rode the vikings and I wanted to cry because I was so terrified, even though I’ve been on the ride 2 times prior. After the fair, we didn’t speak much anymore.\n\nYou showed me how to be strong—how to keep going even when I feel so lonely. Even though we don’t talk much anymore, I’m glad that we were there for each other when we needed it.\n\nI risk it all because… :)",
+    image: pic27,
   },
 ];
 
