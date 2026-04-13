@@ -34,6 +34,7 @@ const IntroSequence = ({
   >("typing");
   const [isSelected, setIsSelected] = useState(false);
   const [titleVisible, setTitleVisible] = useState(false);
+  const hasRun = useRef(false);
 
   const typeText = useCallback((text: string): Promise<void> => {
     return new Promise((resolve) => {
@@ -50,6 +51,9 @@ const IntroSequence = ({
   }, []);
 
   useEffect(() => {
+    if (hasRun.current) return;
+    hasRun.current = true;
+
     const cursor = cursorRef.current;
     const textEl = textRef.current;
     const container = containerRef.current;
@@ -63,7 +67,7 @@ const IntroSequence = ({
     const run = async () => {
       // Phase 1: Type placeholder
       await typeText(PLACEHOLDER_TEXT);
-      await new Promise((r) => setTimeout(r, 400));
+      await new Promise<void>((r) => setTimeout(r, 400));
 
       // Phase 2: Move cursor to text end
       const rect = textEl.getBoundingClientRect();
@@ -90,11 +94,11 @@ const IntroSequence = ({
         });
       });
 
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise<void>((r) => setTimeout(r, 300));
 
       // Phase 4: Dissolve
       setPhase("dissolving");
-      await new Promise((r) => setTimeout(r, 600));
+      await new Promise<void>((r) => setTimeout(r, 600));
       setDisplayText("");
       setIsSelected(false);
       setPhase("retyping");
@@ -111,7 +115,7 @@ const IntroSequence = ({
 
       // Phase 5: Type main title
       await typeText(MAIN_TITLE);
-      await new Promise((r) => setTimeout(r, 600));
+      await new Promise<void>((r) => setTimeout(r, 600));
       setTitleVisible(true);
       setDisplayText("");
 
@@ -124,71 +128,65 @@ const IntroSequence = ({
       const sceneEl = sceneRef.current;
       if (sceneEl) {
         gsap.set(sceneEl, { x: w, opacity: 0 });
-        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve(undefined)));
         onShowScene();
 
-        // Cursor goes off-screen right
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: w + 30, top: h * 0.4, duration: 0.4, ease: "power2.in", onComplete: resolve });
         });
 
-        // Cursor drags scene in from right to center
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: w * 0.55, top: h * 0.45, duration: 1.0, ease: "power3.out" });
           tl.to(sceneEl, { x: 0, opacity: 1, duration: 1.0, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
-      await new Promise((r) => setTimeout(r, 150));
+      await new Promise<void>((r) => setTimeout(r, 150));
 
       // === Drag 2: Lyrics window from the right ===
       const lyricsEl = lyricsRef.current;
       if (lyricsEl) {
         gsap.set(lyricsEl, { x: w + 320, opacity: 0 });
-        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve(undefined)));
         onShowLyrics();
 
-        // Cursor exits right
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: w + 30, top: h * 0.35, duration: 0.35, ease: "power2.in", onComplete: resolve });
         });
 
-        // Cursor drags lyrics in to left side
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: 80, top: h * 0.4, duration: 0.9, ease: "power3.out" });
           tl.to(lyricsEl, { x: 0, opacity: 1, duration: 0.9, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
-      await new Promise((r) => setTimeout(r, 150));
+      await new Promise<void>((r) => setTimeout(r, 150));
 
       // === Drag 3: Now Playing window from the right ===
       const npEl = nowPlayingRef.current;
       if (npEl) {
         gsap.set(npEl, { x: w + 400, opacity: 0 });
-        await new Promise((resolve) => requestAnimationFrame(() => resolve()));
+        await new Promise<void>((resolve) => requestAnimationFrame(() => resolve(undefined)));
         onShowNowPlaying();
 
-        // Cursor exits right
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: w + 30, top: h * 0.88, duration: 0.35, ease: "power2.in", onComplete: resolve });
         });
 
-        // Cursor drags now playing in to bottom-left
         await new Promise<void>((resolve) => {
           tl.to(cursor, { left: 50, top: h * 0.9, duration: 0.9, ease: "power3.out" });
           tl.to(npEl, { x: 0, opacity: 1, duration: 0.9, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
 
-      await new Promise((r) => setTimeout(r, 200));
+      await new Promise<void>((r) => setTimeout(r, 200));
 
       // Cursor exits upward
       await new Promise<void>((resolve) => {
         tl.to(cursor, { top: -40, duration: 0.4, ease: "power2.in", onComplete: resolve });
       });
 
-      await new Promise((r) => setTimeout(r, 300));
+      await new Promise<void>((r) => setTimeout(r, 300));
       onComplete();
     };
 
