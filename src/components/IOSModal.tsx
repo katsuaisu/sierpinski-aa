@@ -13,10 +13,10 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
   if (!isOpen) return null;
 
   return (
-    <div className="absolute bottom-6 right-6 z-40 w-72 animate-scale-in">
-      <DraggableWindow>
-        <div className="window-chrome">
-          <div className="window-titlebar">
+    <div className="absolute bottom-6 right-6 z-40 animate-scale-in">
+      <DraggableWindow className="relative" defaultWidth={320} minWidth={250} minHeight={200}>
+        <div className="window-chrome h-full flex flex-col">
+          <div className="window-titlebar flex-shrink-0">
             <div className="window-dot window-dot-red" />
             <div className="window-dot window-dot-yellow" />
             <div className="window-dot window-dot-green" />
@@ -35,7 +35,7 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
             <img
               src={image}
               alt={title}
-              className="w-full h-auto object-contain max-h-96"
+              className="w-full h-auto object-contain max-h-96 flex-shrink-0"
               loading="lazy"
               onError={(e) => {
                 (e.target as HTMLImageElement).style.display = "none";
@@ -43,7 +43,7 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
             />
           )}
 
-          <div className="p-4 max-h-96 overflow-y-auto" style={{ background: "hsl(var(--card))" }}>
+          <div className="p-4 flex-1 overflow-y-auto" style={{ background: "hsl(var(--card))" }}>
             <h3
               className="text-sm font-semibold tracking-tight mb-2"
               style={{
