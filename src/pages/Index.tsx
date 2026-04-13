@@ -1,8 +1,7 @@
 import { useRef, useState, useEffect } from "react";
 import IntroSequence from "@/components/IntroSequence";
 import SceneWindow from "@/components/SceneWindow";
-import LyricsPanel from "@/components/LyricsPanel";
-import NowPlayingWindow from "@/components/NowPlayingWindow";
+import MusicLyricsWindow from "@/components/MusicLyricsWindow";
 import DraggableWindow from "@/components/DraggableWindow";
 import IOSFolder from "@/components/IOSFolder";
 import riskItAllAudio from "../../riskitall.mp3";
@@ -10,11 +9,9 @@ import riskItAllAudio from "../../riskitall.mp3";
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const [sceneVisible, setSceneVisible] = useState(false);
-  const [lyricsVisible, setLyricsVisible] = useState(false);
-  const [nowPlayingVisible, setNowPlayingVisible] = useState(false);
+  const [musicVisible, setMusicVisible] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
-  const lyricsRef = useRef<HTMLDivElement>(null);
-  const nowPlayingRef = useRef<HTMLDivElement>(null);
+  const musicRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
 
   useEffect(() => {
@@ -29,25 +26,19 @@ const Index = () => {
       audioEl.muted = true;
       audioEl
         .play()
-        .then(() => {
-          audioEl.muted = false;
-        })
-        .catch((error) => {
-          console.log("Audio autoplay blocked, will try after interaction:", error);
-          audioEl.muted = false;
-        });
+        .then(() => { audioEl.muted = false; })
+        .catch(() => { audioEl.muted = false; });
     };
 
     const handleInteraction = () => {
       if (audioEl.paused || audioEl.muted) {
         audioEl.muted = false;
-        audioEl.play().catch(() => { });
+        audioEl.play().catch(() => {});
       }
     };
 
     attemptPlay();
     audioEl.addEventListener("loadeddata", attemptPlay, { once: true });
-
     window.addEventListener("click", handleInteraction, { once: true });
     window.addEventListener("mousedown", handleInteraction, { once: true });
     window.addEventListener("touchstart", handleInteraction, { once: true });
@@ -64,7 +55,6 @@ const Index = () => {
 
   return (
     <div className="relative w-screen h-screen dot-grid-bg overflow-hidden">
-      {/* Audio element */}
       <audio
         ref={audioRef}
         src={riskItAllAudio}
@@ -77,10 +67,7 @@ const Index = () => {
 
       {/* Glassmorphism title */}
       {sceneVisible && (
-        <div
-          className="absolute left-1/2 -translate-x-1/2 z-10 animate-fade-in"
-          style={{ top: "5%" }}
-        >
+        <div className="absolute left-1/2 -translate-x-1/2 z-10 animate-fade-in" style={{ top: "5%" }}>
           <div
             className="px-8 py-3 rounded-2xl"
             style={{
@@ -116,37 +103,23 @@ const Index = () => {
         <SceneWindow />
       </div>
 
-      {/* Lyrics panel - draggable */}
+      {/* Combined Music + Lyrics window */}
       <div
-        ref={lyricsRef}
-        className="absolute left-6 md:left-12 top-1/2 -translate-y-1/2 z-10"
+        ref={musicRef}
+        className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
         style={{
-          transform: lyricsVisible
+          transform: musicVisible
             ? "translateY(-50%)"
-            : "translateX(calc(100vw + 320px)) translateY(-50%)",
-          opacity: lyricsVisible ? 1 : 0,
+            : "translateX(calc(100vw + 500px)) translateY(-50%)",
+          opacity: musicVisible ? 1 : 0,
         }}
       >
-        <DraggableWindow>
-          <LyricsPanel embedded />
+        <DraggableWindow className="relative" defaultWidth={480} defaultHeight={420} minWidth={350} minHeight={300}>
+          <MusicLyricsWindow />
         </DraggableWindow>
       </div>
 
-      {/* Now Playing window - draggable */}
-      <div
-        ref={nowPlayingRef}
-        className="absolute bottom-6 left-6 z-10"
-        style={{
-          transform: nowPlayingVisible ? undefined : "translateX(calc(100vw + 400px))",
-          opacity: nowPlayingVisible ? 1 : 0,
-        }}
-      >
-        <DraggableWindow>
-          <NowPlayingWindow />
-        </DraggableWindow>
-      </div>
-
-      {/* iOS Folders - shown after intro */}
+      {/* iOS Folders */}
       {introComplete && (
         <>
           <IOSFolder
@@ -161,10 +134,11 @@ const Index = () => {
                   Here's how to navigate this experience:
                 </p>
                 <ul className="text-xs space-y-2" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  <li>🖱️ <strong>Rotate</strong> the 3D model by clicking and dragging on it</li>
+                  <li>🖱️ <strong>Rotate</strong> the 3D model by clicking and dragging</li>
                   <li>🔍 <strong>Zoom</strong> in/out with your scroll wheel</li>
                   <li>🔺 <strong>Click</strong> on any triangle face to see its story</li>
                   <li>🪟 <strong>Drag</strong> any window by its title bar to rearrange</li>
+                  <li>↔️ <strong>Resize</strong> any window from the bottom-right corner</li>
                   <li>🎵 Music plays automatically — click anywhere if it doesn't start</li>
                 </ul>
                 <p className="text-xs italic" style={{ color: "hsl(var(--muted-foreground))" }}>
@@ -200,11 +174,9 @@ const Index = () => {
       {!introComplete && (
         <IntroSequence
           sceneRef={sceneRef}
-          lyricsRef={lyricsRef}
-          nowPlayingRef={nowPlayingRef}
+          musicRef={musicRef}
           onShowScene={() => setSceneVisible(true)}
-          onShowLyrics={() => setLyricsVisible(true)}
-          onShowNowPlaying={() => setNowPlayingVisible(true)}
+          onShowMusic={() => setMusicVisible(true)}
           onComplete={() => setIntroComplete(true)}
         />
       )}
