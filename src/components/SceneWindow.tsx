@@ -183,7 +183,7 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Paskuhan",
-    caption: "A time of celebration, growth, and shared joy. In moments like these, I realize how much I've treasured every experience, every connection, and every reason to keep going. The holidays remind me that beneath all the struggles and fears, there's a warmth that makes it all worthwhile.\n\nI risk it all because I want to keep creating memories worth celebrating.",
+    caption: "title",
     image: pic30,
   },];
 
