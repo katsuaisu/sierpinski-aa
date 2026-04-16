@@ -32,6 +32,9 @@ import pic24 from "@/assets/gallery/pic24.png";
 import pic25 from "@/assets/gallery/pic25.png";
 import pic26 from "@/assets/gallery/pic26.png";
 import pic27 from "@/assets/gallery/pic27.png";
+import pic28 from "@/assets/gallery/pic28.png";
+import pic29 from "@/assets/gallery/pic29.png";
+import pic30 from "@/assets/gallery/pic30.png";
 
 const GALLERY_ITEMS = [
   {
@@ -151,25 +154,38 @@ const GALLERY_ITEMS = [
   },
   {
     title: "Biology Group",
-    caption: "I’ve known Uno and Ruth for about 3 years, but I’ve only gotten the opportunity to get close to them this school year. If I’m being completely honest, I don’t think I would survive this school year–or even life–without them.",
+    caption: "I’ve known Uno and Ruth for about 3 years, but I’ve only gotten the opportunity to get close to them this school year. If I’m being completely honest, I don’t think I would survive this school year–or even life–without them. \n\nI risk it all because when I look at you, I see the reason why I do.",
     image: pic24,
   },
   {
     title: "YMSAT Awarding",
-    caption: "This picture shows me and Uno’s award for the YMSAT Website competition where we won second place. The whole week, I was really anxious because I wanted to be first so badly, and that I was willing to go through any means to do so. He reminded me that win or lose, our hard work would still bear fruit.\n\nI’m always paired with Uno for groupworks. If we ever have a pair activity, we tilt our heads towards each other and laugh in unison. If we ever have a group activity, you’ll find me gravitating towards his chair and scouring for other groupmates. If there’s anyone who understands me, I know it’s him.\n\nIf you’re seeing this: I hate you.\nIf you’re not: Thank you, brother. I love you.\n\nI risk it all because",
+    caption: "This picture shows me and Uno’s award for the YMSAT Website competition where we won second place. The whole week, I was really anxious because I wanted to be first so badly, and that I was willing to go through any means to do so. He reminded me that win or lose, our hard work would still bear fruit.\n\nI’m always paired with Uno for groupworks. If we ever have a pair activity, we tilt our heads towards each other and laugh in unison. If we ever have a group activity, you’ll find me gravitating towards his chair and scouring for other groupmates. If there’s anyone who understands me, I know it’s him.\n\nIf you’re seeing this: I hate you.\nIf you’re not: Thank you, brother. I love you.\n\nI risk it all because I have a brother to keep going for.",
     image: pic25,
   },
   {
     title: "SAYAWIT Awarding",
-    caption: "I got close to Ruth during the second quarter because we were elected co-directors for our class project, Sayawit. I’ve always found her a bit intimidating, but nonetheless, I looked up to her. It was there where I noticed that we share multiple similarities. We have the same struggles, we go to the same exact art conventions, we have the same creative taste, we have the same sentiments, and even the people we like are best friends—which goes to show that even our types are similar.\n\nI’m grateful for Sayawit because it showed me how much I can do—but I’m so much more than thankful that it brought me to you. To many more rants, whether it be about our crushes, acads, or life in general.\n\nI love you, Ruth.\n\nI risk it all because",
+    caption: "I got close to Ruth during the second quarter because we were elected co-directors for our class project, Sayawit. I’ve always found her a bit intimidating, but nonetheless, I looked up to her. It was there where I noticed that we share multiple similarities. We have the same struggles, we go to the same exact art conventions, we have the same creative taste, we have the same sentiments, and even the people we like are best friends—which goes to show that even our types are similar.\n\nI’m grateful for Sayawit because it showed me how much I can do—but I’m so much more than thankful that it brought me to you. To many more rants, whether it be about our crushes, acads, or life in general.\n\nI love you, Ruth.\n\nI risk it all because I have a sister to keep going for.",
     image: pic26,
   },
   {
     title: "Haraya",
-    caption: "This was after my shift during the fair where I had free time to roam around with my friends. Moments after this, we rode the vikings and I wanted to cry because I was so terrified, even though I’ve been on the ride 2 times prior. After the fair, we didn’t speak much anymore.\n\nYou showed me how to be strong—how to keep going even when I feel so lonely. Even though we don’t talk much anymore, I’m glad that we were there for each other when we needed it.\n\nI risk it all because… :)",
+    caption: "This was after my shift during the fair where I had free time to roam around with my friends. Moments after this, we rode the vikings and I wanted to cry because I was so terrified, even though I’ve been on the ride 2 times prior. After the fair, we didn’t speak much anymore.\n\nYou showed me how to be strong—how to keep going even when I feel so lonely. Even though we don’t talk much anymore, I’m glad that we were there for each other when we needed it. I never told you this, but I'm grateful for all the love you've shown me. It kept me going when I needed it.\n\nI risk it all because you were there for me when I was ready to give up.",
     image: pic27,
+  }, {
+    title: "GlamWorks Dark Mahogany",
+    caption: "Nothing can erase the sharp, clinical scent of ammonia that filled my lungs. Every squeeze of the bright red sludge onto my scalp was a ritual—a slow, gruesome execution against the version of me that existed to the eyes of others only when molded. The power came from a heat that burnt deep inside my soul—an incandescent fire that burnt my throat and flew through my ears whispering that I was finally, violently taking up space. I was fueled by a productive, almost desperate efficiency to shed years of old skin. I didn't wait for my strands of hair to dry. I grabbed a flashlight as its beams cut through the dimness like a blade. I held it close—so close I could feel the residual heat of light against my head. In the center of that artificial glow, the dullness of my past had been incinerated.\n\nTo be born into yourself, you must first perform the sacred, violent ceremony of killing who you were told to be.\n\nYou will never incinerate who I am, no matter how many times I am reprimanded.\n\nI risk it all because I don't want to keep hiding.",
+    image: pic28,
   },
-];
+  {
+    title: "SayAwit",
+    caption: "This was my very first class project taking on a leadership role actually. I was really scared because I felt like I would mess up or lead the class into having a bad output. There were so many days where I wished that I shouldn't've stepped up because so much weight was on my shoulders and I didn't think I could bear it. I'm so, so grateful to have such a cooperative, sweet section because they supported and showed so much interest in this project.\n\nThere were so many days where I wanted to run. There were so many days when I wanted to ghost everyone, stop attending practice, and stop leading—but you were there. You all were there, and when you were on stage, I was so grateful that I stayed through everything.\n\nKatulad ng mundong daloy ay paikot-ikot, ang husay at talino'y dapat ipalibot-libot.\n\nThank you, Strontium.\n\nI risk it all because if I ran, I wouldn't have had anyone to risk it all for.",
+    image: pic29,
+  },
+  {
+    title: "Paskuhan",
+    caption: "A time of celebration, growth, and shared joy. In moments like these, I realize how much I've treasured every experience, every connection, and every reason to keep going. The holidays remind me that beneath all the struggles and fears, there's a warmth that makes it all worthwhile.\n\nI risk it all because I want to keep creating memories worth celebrating.",
+    image: pic30,
+  },];
 
 const SceneWindow = () => {
   const [modalOpen, setModalOpen] = useState(false);

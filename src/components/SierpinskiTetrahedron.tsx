@@ -29,6 +29,9 @@ import pic24 from "@/assets/gallery/pic24.png";
 import pic25 from "@/assets/gallery/pic25.png";
 import pic26 from "@/assets/gallery/pic26.png";
 import pic27 from "@/assets/gallery/pic27.png";
+import pic28 from "@/assets/gallery/pic28.png";
+import pic29 from "@/assets/gallery/pic29.png";
+import pic30 from "@/assets/gallery/pic30.png";
 
 interface TetraData {
   vertices: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3];
@@ -63,7 +66,7 @@ function sierpinskiTetra(
   ];
 }
 
-const TEXTURE_PATHS = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17, pic18, pic19, pic20, pic21, pic22, pic23, pic24, pic25, pic26, pic27];
+const TEXTURE_PATHS = [pic1, pic2, pic3, pic4, pic5, pic6, pic7, pic8, pic9, pic10, pic11, pic12, pic13, pic14, pic15, pic16, pic17, pic18, pic19, pic20, pic21, pic22, pic23, pic24, pic25, pic26, pic27, pic28, pic29, pic30];
 
 function createTetraGeometry(verts: [THREE.Vector3, THREE.Vector3, THREE.Vector3, THREE.Vector3]) {
   const [v0, v1, v2, v3] = verts;

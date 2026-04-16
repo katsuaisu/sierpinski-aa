@@ -48,14 +48,14 @@ const EmailNotification = () => {
                   fontFamily: "'SF Pro Display', -apple-system, sans-serif",
                   color: "hsl(0 0% 10%)",
                 }}>
-                  For You — from someone special
+                  To My Evocations
                 </span>
                 <span className="text-[10px]" style={{ color: "hsl(0 0% 50%)" }}>
                   just now
                 </span>
               </div>
               <p className="text-[11px]" style={{ color: "hsl(0 0% 50%)" }}>
-                To: You &lt;you@heart.com&gt;
+                To: You &lt;rmvsaquing@gmail.com&gt;
               </p>
             </div>
 
@@ -65,39 +65,49 @@ const EmailNotification = () => {
                 fontFamily: "'SF Pro Text', -apple-system, sans-serif",
                 color: "hsl(0 0% 20%)",
               }}>
-                <p>Hey you,</p>
-
                 <p>
-                  I hope you took your time going through everything. I know it's a lot — maybe even a little overwhelming — but every single piece of this was made with you in mind. Every triangle, every lyric, every little detail… it's all for you.
+                  Not a lot of people know this, but I am, in fact, extremely scared. I'm scared that one day, I will wake up, go to school, do everything I need to do, then go to sleep and let the egregious cycle repeat itself with no reason to.
                 </p>
 
                 <p>
-                  I don't really know how to say everything I want to say, so I figured I'd try to build it instead. Words never felt like enough. They still don't. But maybe this comes close.
+                  Everyday, I'm afraid to lose my reasons why I wake up in the morning and face all the problems I need to face.
                 </p>
 
                 <p>
-                  Each face of that triangle holds something real — a memory, a feeling, a moment that mattered. Some of them are happy, the kind that make me smile just thinking about them. Some of them are bittersweet, the kind that remind me how much I care. And some of them are just… honest. The messy, complicated, beautiful kind of honest.
+                  Everyday, I'm afraid to lose you.
                 </p>
 
                 <p>
-                  I wanted you to see all of it. Not just the easy parts, but the full picture. Because that's what you deserve — the whole truth, even when it's hard to put into words.
+                  Time does not wait for us to be ready, it waits for us to make the decision to do everything scared.
                 </p>
 
                 <p>
-                  You've changed me in ways I'm still figuring out. The way I think, the way I feel, the way I see the world — it's all a little different now, and it's because of you. I don't say that lightly. I mean it with everything I have.
+                  It very well may be that one day— I will never remember you, or let you cross my mind in this lifetime. Even so, I think it is an understatement to say that so much of me is made of what I learned from you, and I will carry you with me like a handprint on my heart.
                 </p>
 
                 <p>
-                  So thank you. For being here. For being you. For making me want to be better, do better, and build something worth giving.
+                  Maybe in a few years, I'll look back at you and think back on what I could've done right in those moments to avoid them, or how to make it last longer. But, tonight, as I'm cramming this letter to you—I am free. I am free of regret, rue, and remorse.
                 </p>
 
                 <p>
-                  I'd risk it all for you. You already know that.
+                  Tonight, I look back at you and see pieces of me strung together in one triangle. Pieces of me that's irrevocably altered me as a person in ways that I do not understand yet. Words have never come close as to how much I want to cherish you, and they still don't. But maybe this comes close.
+                </p>
+
+                <p>
+                  Time is running out. I have countless more errands to run.
+                </p>
+
+                <p>
+                  Thank you, for being the reason why I go through my "egregious cycle" in the first place.
+                </p>
+
+                <p>
+                  Thank you for being the reason why I risk it all.
                 </p>
 
                 <p style={{ marginTop: "24px" }}>
-                  With everything,<br />
-                  — Me 💙
+                  Sincerely,<br />
+                  me 
                 </p>
               </div>
             </div>
@@ -132,7 +142,7 @@ const EmailNotification = () => {
             }}
           >
             <svg width="18" height="18" viewBox="0 0 24 24" fill="white">
-              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z"/>
+              <path d="M20 4H4c-1.1 0-2 .9-2 2v12c0 1.1.9 2 2 2h16c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 4l-8 5-8-5V6l8 5 8-5v2z" />
             </svg>
           </div>
           <div className="flex-1 min-w-0">
@@ -149,7 +159,7 @@ const EmailNotification = () => {
               fontFamily: "'SF Pro Text', -apple-system, sans-serif",
               color: "hsl(0 0% 10%)",
             }}>
-              For You — from someone special
+              To My Evocations
             </p>
           </div>
         </div>
@@ -164,7 +174,7 @@ const EmailNotification = () => {
             WebkitBoxOrient: "vertical" as const,
             overflow: "hidden",
           }}>
-            Hey you, I hope you took your time going through everything. Every triangle, every lyric, every little detail… it's all for you.
+            CONFIDENTIALITY NOTICE: This email should only be opened and read after the triangle has been sorted through.
           </p>
         </div>
       </div>
