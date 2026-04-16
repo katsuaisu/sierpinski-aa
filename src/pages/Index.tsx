@@ -4,12 +4,14 @@ import SceneWindow from "@/components/SceneWindow";
 import MusicLyricsWindow from "@/components/MusicLyricsWindow";
 import DraggableWindow from "@/components/DraggableWindow";
 import IOSFolder from "@/components/IOSFolder";
+import EmailNotification from "@/components/EmailNotification";
 import riskItAllAudio from "../../riskitall.mp3";
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const [sceneVisible, setSceneVisible] = useState(false);
   const [musicVisible, setMusicVisible] = useState(false);
+  const [showEmail, setShowEmail] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const musicRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -53,6 +55,13 @@ const Index = () => {
     };
   }, []);
 
+  // Show email notification after 1 minute
+  useEffect(() => {
+    if (!introComplete) return;
+    const timer = setTimeout(() => setShowEmail(true), 60000);
+    return () => clearTimeout(timer);
+  }, [introComplete]);
+
   return (
     <div className="relative w-screen h-screen dot-grid-bg overflow-hidden">
       <audio
@@ -91,84 +100,63 @@ const Index = () => {
         </div>
       )}
 
-      {/* 3D Sierpinski */}
+      {/* 3D Sierpinski — hidden until dragged in */}
       <div
         ref={sceneRef}
         className="absolute inset-0"
         style={{
-          transform: sceneVisible ? undefined : "translateX(110%)",
-          opacity: sceneVisible ? 1 : 0,
+          visibility: sceneVisible ? "visible" : "hidden",
+          opacity: 0,
         }}
       >
         <SceneWindow />
       </div>
 
-      {/* Combined Music + Lyrics window */}
+      {/* Combined Music + Lyrics window — hidden until dragged in */}
       <div
         ref={musicRef}
         className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
         style={{
-          transform: musicVisible
-            ? "translateY(-50%)"
-            : "translateX(calc(100vw + 500px)) translateY(-50%)",
-          opacity: musicVisible ? 1 : 0,
+          visibility: musicVisible ? "visible" : "hidden",
+          opacity: 0,
         }}
       >
-        <DraggableWindow className="relative" defaultWidth={480} defaultHeight={420} minWidth={350} minHeight={300}>
+        <DraggableWindow className="relative" defaultWidth={420} defaultHeight={340} minWidth={320} minHeight={260}>
           <MusicLyricsWindow />
         </DraggableWindow>
       </div>
 
-      {/* iOS Folders */}
+      {/* iOS Folder — right side only */}
       {introComplete && (
-        <>
-          <IOSFolder
-            label="OPEN BEFORE"
-            position="top-left"
-            content={
-              <div className="space-y-3">
-                <h3 className="text-sm font-semibold" style={{ color: "hsl(var(--foreground))", fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
-                  Welcome! 👋
-                </h3>
-                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  Here's how to navigate this experience:
-                </p>
-                <ul className="text-xs space-y-2" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  <li>🖱️ <strong>Rotate</strong> the 3D model by clicking and dragging</li>
-                  <li>🔍 <strong>Zoom</strong> in/out with your scroll wheel</li>
-                  <li>🔺 <strong>Click</strong> on any triangle face to see its story</li>
-                  <li>🪟 <strong>Drag</strong> any window by its title bar to rearrange</li>
-                  <li>↔️ <strong>Resize</strong> any window from the bottom-right corner</li>
-                  <li>🎵 Music plays automatically — click anywhere if it doesn't start</li>
-                </ul>
-                <p className="text-xs italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  Take your time exploring each triangle. Every face has a story.
-                </p>
-              </div>
-            }
-          />
-          <IOSFolder
-            label="OPEN AFTER"
-            position="top-right"
-            content={
-              <div className="space-y-3">
-                <h3 className="text-sm font-semibold" style={{ color: "hsl(var(--foreground))", fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
-                  Thank you for exploring 💙
-                </h3>
-                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  If you've made it this far, thank you for taking the time to go through everything. Each triangle represents a moment, a memory, a risk worth taking.
-                </p>
-                <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  The Sierpinski triangle is a fractal — infinite in its complexity, yet built from the simplest of shapes. Much like life, every small moment builds into something beautiful.
-                </p>
-                <p className="text-xs leading-relaxed italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-                  "It's crazy, but it's true — there's nothing I won't do. I'd risk it all for you."
-                </p>
-              </div>
-            }
-          />
-        </>
+        <IOSFolder
+          label="OPEN BEFORE"
+          position="top-right"
+          content={
+            <div className="space-y-3">
+              <h3 className="text-sm font-semibold" style={{ color: "hsl(var(--foreground))", fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
+                Welcome! 👋
+              </h3>
+              <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
+                Here's how to navigate this experience:
+              </p>
+              <ul className="text-xs space-y-2" style={{ color: "hsl(var(--muted-foreground))" }}>
+                <li>🖱️ <strong>Rotate</strong> the 3D model by clicking and dragging</li>
+                <li>🔍 <strong>Zoom</strong> in/out with your scroll wheel</li>
+                <li>🔺 <strong>Click</strong> on any triangle face to see its story</li>
+                <li>🪟 <strong>Drag</strong> any window by its title bar to rearrange</li>
+                <li>↔️ <strong>Resize</strong> any window from the bottom-right corner</li>
+                <li>🎵 Music plays automatically — click anywhere if it doesn't start</li>
+              </ul>
+              <p className="text-xs italic" style={{ color: "hsl(var(--muted-foreground))" }}>
+                Take your time exploring each triangle. Every face has a story.
+              </p>
+            </div>
+          }
+        />
       )}
+
+      {/* Email notification — appears after 1 minute */}
+      {showEmail && <EmailNotification />}
 
       {/* Intro overlay */}
       {!introComplete && (

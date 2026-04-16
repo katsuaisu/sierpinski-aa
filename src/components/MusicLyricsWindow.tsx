@@ -76,21 +76,27 @@ const MusicLyricsWindow = () => {
 
   return (
     <div className="w-full h-full flex flex-col">
-      <div className="window-chrome h-full flex flex-col">
+      <div className="h-full flex flex-col rounded-xl overflow-hidden" style={{
+        background: "hsla(0, 0%, 100%, 0.45)",
+        backdropFilter: "blur(40px)",
+        WebkitBackdropFilter: "blur(40px)",
+        border: "1px solid hsla(0, 0%, 100%, 0.5)",
+        boxShadow: "0 8px 32px hsla(0, 0%, 0%, 0.1), inset 0 1px 0 hsla(0, 0%, 100%, 0.6)",
+      }}>
         <div className="window-titlebar flex-shrink-0">
           <div className="window-dot window-dot-red" />
           <div className="window-dot window-dot-yellow" />
           <div className="window-dot window-dot-green" />
-          <span className="ml-2 text-[11px] text-muted-foreground font-medium">
+          <span className="ml-2 text-[11px] font-medium" style={{ color: "hsla(0, 0%, 0%, 0.5)" }}>
             Apple Music
           </span>
         </div>
 
-        <div className="flex flex-1 min-h-0" style={{ background: "hsl(var(--card))" }}>
+        <div className="flex flex-1 min-h-0">
           {/* Left side: Album art + controls */}
-          <div className="w-48 flex-shrink-0 flex flex-col border-r" style={{ borderColor: "hsl(var(--border))" }}>
+          <div className="w-36 flex-shrink-0 flex flex-col border-r" style={{ borderColor: "hsla(0, 0%, 0%, 0.08)" }}>
             {/* Album art */}
-            <div className="p-3">
+            <div className="p-2">
               <div className="w-full aspect-square rounded-lg overflow-hidden" style={{
                 background: "linear-gradient(135deg, hsl(350 80% 55%), hsl(20 90% 55%))",
               }}>
@@ -104,53 +110,53 @@ const MusicLyricsWindow = () => {
             </div>
 
             {/* Track info */}
-            <div className="px-3 pb-2">
-              <p className="text-sm font-semibold truncate" style={{
+            <div className="px-2 pb-1">
+              <p className="text-[11px] font-semibold truncate" style={{
                 fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-                color: "hsl(var(--foreground))",
+                color: "hsla(0, 0%, 0%, 0.85)",
               }}>
                 Risk It All
               </p>
-              <p className="text-xs text-muted-foreground truncate">Bruno Mars</p>
+              <p className="text-[10px] truncate" style={{ color: "hsla(0, 0%, 0%, 0.45)" }}>Bruno Mars</p>
             </div>
 
             {/* Progress bar */}
-            <div className="px-3 pb-2">
-              <div className="w-full h-[3px] rounded-full" style={{ background: "hsl(var(--muted))" }}>
+            <div className="px-2 pb-1">
+              <div className="w-full h-[2px] rounded-full" style={{ background: "hsla(0, 0%, 0%, 0.1)" }}>
                 <div className="h-full rounded-full progress-bar" style={{ background: "hsl(var(--primary))" }} />
               </div>
-              <div className="flex justify-between mt-1">
-                <span className="text-[9px] text-muted-foreground">1:12</span>
-                <span className="text-[9px] text-muted-foreground">3:24</span>
+              <div className="flex justify-between mt-0.5">
+                <span className="text-[8px]" style={{ color: "hsla(0, 0%, 0%, 0.4)" }}>1:12</span>
+                <span className="text-[8px]" style={{ color: "hsla(0, 0%, 0%, 0.4)" }}>3:24</span>
               </div>
             </div>
 
             {/* Playback controls */}
-            <div className="px-3 pb-3 flex items-center justify-center gap-4">
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M19 20L9 12l10-8v16zM7 19H5V5h2v14z"/></svg>
+            <div className="px-2 pb-2 flex items-center justify-center gap-3">
+              <button style={{ color: "hsla(0, 0%, 0%, 0.4)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M19 20L9 12l10-8v16zM7 19H5V5h2v14z"/></svg>
               </button>
-              <button className="w-8 h-8 rounded-full flex items-center justify-center" style={{ background: "hsl(var(--foreground))" }}>
-                <svg width="14" height="14" viewBox="0 0 24 24" fill="hsl(var(--background))">
+              <button className="w-6 h-6 rounded-full flex items-center justify-center" style={{ background: "hsla(0, 0%, 0%, 0.8)" }}>
+                <svg width="10" height="10" viewBox="0 0 24 24" fill="white">
                   <path d="M6 4h4v16H6V4zm8 0h4v16h-4V4z"/>
                 </svg>
               </button>
-              <button className="text-muted-foreground hover:text-foreground transition-colors">
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l10 8-10 8V4zm12-1h2v18h-2V3z"/></svg>
+              <button style={{ color: "hsla(0, 0%, 0%, 0.4)" }}>
+                <svg width="12" height="12" viewBox="0 0 24 24" fill="currentColor"><path d="M5 4l10 8-10 8V4zm12-1h2v18h-2V3z"/></svg>
               </button>
             </div>
 
             {/* Sound bars */}
-            <div className="px-3 pb-3 flex items-end justify-center gap-[2px] h-6">
+            <div className="px-2 pb-2 flex items-end justify-center gap-[2px] h-4">
               {[0, 0.15, 0.3, 0.45, 0.6].map((delay, i) => (
                 <div
                   key={i}
-                  className="w-[3px] rounded-full"
+                  className="w-[2px] rounded-full"
                   style={{
                     background: "hsl(var(--primary))",
                     animation: "soundbar 0.6s ease-in-out infinite alternate",
                     animationDelay: `${delay}s`,
-                    height: "3px",
+                    height: "2px",
                   }}
                 />
               ))}
@@ -158,16 +164,16 @@ const MusicLyricsWindow = () => {
           </div>
 
           {/* Right side: Lyrics */}
-          <div className="flex-1 min-w-0 overflow-hidden lyrics-container">
-            <div ref={scrollRef} className="h-full overflow-hidden px-5 py-4">
-              <div className="py-[15vh]">
+          <div className="flex-1 min-w-0 overflow-hidden">
+            <div ref={scrollRef} className="h-full overflow-hidden px-4 py-3">
+              <div className="py-[10vh]">
                 {LINES.map((line, i) => (
                   <p
                     key={i}
-                    className={`text-base md:text-lg font-bold mb-3 ${line === "" ? "h-6" : ""}`}
+                    className={`text-[13px] font-bold mb-2 ${line === "" ? "h-4" : ""}`}
                     style={{
                       fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-                      color: "hsl(var(--foreground))",
+                      color: "hsla(0, 0%, 0%, 0.75)",
                     }}
                   >
                     {line}
@@ -176,10 +182,10 @@ const MusicLyricsWindow = () => {
                 {LINES.map((line, i) => (
                   <p
                     key={`repeat-${i}`}
-                    className={`text-base md:text-lg font-bold mb-3 ${line === "" ? "h-6" : ""}`}
+                    className={`text-[13px] font-bold mb-2 ${line === "" ? "h-4" : ""}`}
                     style={{
                       fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-                      color: "hsl(var(--foreground))",
+                      color: "hsla(0, 0%, 0%, 0.75)",
                     }}
                   >
                     {line}
