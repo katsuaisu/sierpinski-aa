@@ -122,7 +122,7 @@ const Index = () => {
         }}
       >
         <DraggableWindow className="relative" defaultWidth={420} defaultHeight={340} minWidth={320} minHeight={260}>
-          <MusicLyricsWindow />
+          <MusicLyricsWindow audioRef={audioRef} />
         </DraggableWindow>
       </div>
 
