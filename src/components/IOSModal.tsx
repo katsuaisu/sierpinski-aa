@@ -13,7 +13,7 @@ const IOSModal = ({ isOpen, onClose, title, caption, image }: IOSModalProps) => 
   if (!isOpen) return null;
 
   return (
-    <div className="absolute bottom-6 right-6 z-40 animate-scale-in">
+    <div className="absolute bottom-6 left-6 z-40 animate-scale-in">
       <DraggableWindow className="relative" defaultWidth={320} minWidth={250} minHeight={200}>
         <div className="window-chrome h-full flex flex-col">
           <div className="window-titlebar flex-shrink-0">

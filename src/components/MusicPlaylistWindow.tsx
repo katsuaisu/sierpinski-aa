@@ -8,6 +8,7 @@ interface Track {
 }
 
 const TRACKS: Track[] = [
+  { title: "Risk It All", artist: "Bruno Mars", duration: "3:34", cover: "riskitall.png" },
   { title: "Landslide", artist: "Fleetwood Mac", duration: "3:19", cover: "landslide.png" },
   { title: "For Good", artist: "Cynthia Erivo & Ariana Grande", duration: "5:38", cover: "forgood.png" },
   { title: "Mystery Of Love (Demo)", artist: "Sufjan Stevens", duration: "4:08", cover: "mol.png" },
@@ -69,9 +70,14 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                 boxShadow: "0 8px 20px hsla(0, 0%, 0%, 0.15)",
               }}
             >
-              <div className="w-full h-full flex items-center justify-center text-white text-3xl">
-                ♡
-              </div>
+              <img
+                src="/src/assets/coverpicture.png"
+                alt="Playlist cover"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <h2

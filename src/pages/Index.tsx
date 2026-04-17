@@ -107,7 +107,7 @@ const Index = () => {
       {/* Combined Music + Lyrics window — hidden until dragged in */}
       <div
         ref={musicRef}
-        className="absolute left-4 top-1/2 -translate-y-1/2 z-10"
+        className="absolute right-4 top-1/2 -translate-y-1/2 z-10"
         style={{
           visibility: musicVisible ? "visible" : "hidden",
           opacity: 0,
