@@ -143,7 +143,7 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
 
       {musicOpen && <MusicPlaylistWindow onClose={() => setMusicOpen(false)} />}
       {mailOpen && (
-        <EmailWindow onClose={() => setMailOpen(false)} hasMail={hasNewMail || mailOpen === true && false ? true : hasNewMailEverRef.current} />
+        <EmailWindow onClose={() => setMailOpen(false)} hasMail={hasNewMail} />
       )}
 
       <audio ref={dingRef} src="" style={{ display: "none" }} />
