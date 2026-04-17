@@ -8,6 +8,7 @@ interface Track {
 }
 
 const TRACKS: Track[] = [
+  { title: "Risk It All", artist: "Bruno Mars", duration: "3:34", cover: "riskitall.png" },
   { title: "Landslide", artist: "Fleetwood Mac", duration: "3:19", cover: "landslide.png" },
   { title: "For Good", artist: "Cynthia Erivo & Ariana Grande", duration: "5:38", cover: "forgood.png" },
   { title: "Mystery Of Love (Demo)", artist: "Sufjan Stevens", duration: "4:08", cover: "mol.png" },
