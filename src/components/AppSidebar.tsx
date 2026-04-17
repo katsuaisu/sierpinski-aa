@@ -47,17 +47,17 @@ interface AppSidebarProps {
 }
 
 const AppSidebar = ({ introComplete }: AppSidebarProps) => {
-  const [mailVisible, setMailVisible] = useState(false);
+  const [hasNewMail, setHasNewMail] = useState(false);
   const [mailOpen, setMailOpen] = useState(false);
   const [musicOpen, setMusicOpen] = useState(false);
   const dingRef = useRef<HTMLAudioElement | null>(null);
 
-  // Show mail icon after 1 minute with sound
+  // Trigger the (1) notification + sound after 1 minute
   useEffect(() => {
     if (!introComplete) return;
     const timer = setTimeout(() => {
-      setMailVisible(true);
-      // Play notification sound
+      setHasNewMail(true);
+      // Play notification "ding" sound
       try {
         const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
         const ctx = new AudioCtx();
@@ -82,6 +82,12 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
     }, 60000);
     return () => clearTimeout(timer);
   }, [introComplete]);
+
+  const handleMailClick = () => {
+    setMailOpen((v) => !v);
+    // Opening clears the badge
+    if (!mailOpen) setHasNewMail(false);
+  };
 
   if (!introComplete) return null;
 
@@ -113,32 +119,32 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
           </span>
         </button>
 
-        {/* Mail icon (after 1 min) */}
-        {mailVisible && (
-          <button
-            onClick={() => setMailOpen((v) => !v)}
-            className="flex flex-col items-center gap-1 group animate-scale-in"
-            aria-label="Open mail"
+        {/* Mail icon (always visible; badge after 1 min) */}
+        <button
+          onClick={handleMailClick}
+          className="flex flex-col items-center gap-1 group"
+          aria-label="Open mail"
+        >
+          <div className="transition-transform group-hover:scale-110 drop-shadow-lg">
+            <MailIconSvg hasBadge={hasNewMail && !mailOpen} />
+          </div>
+          <span
+            className="text-[11px] font-semibold text-center leading-tight max-w-20"
+            style={{
+              fontFamily: "'SF Pro Display', -apple-system, sans-serif",
+              color: "hsl(var(--foreground))",
+              textShadow: "0 1px 3px hsla(0, 0%, 100%, 0.5)",
+            }}
           >
-            <div className="transition-transform group-hover:scale-110 drop-shadow-lg">
-              <MailIconSvg hasBadge={!mailOpen} />
-            </div>
-            <span
-              className="text-[11px] font-semibold text-center leading-tight max-w-20"
-              style={{
-                fontFamily: "'SF Pro Display', -apple-system, sans-serif",
-                color: "hsl(var(--foreground))",
-                textShadow: "0 1px 3px hsla(0, 0%, 100%, 0.5)",
-              }}
-            >
-              MAIL
-            </span>
-          </button>
-        )}
+            MAIL
+          </span>
+        </button>
       </div>
 
       {musicOpen && <MusicPlaylistWindow onClose={() => setMusicOpen(false)} />}
-      {mailOpen && <EmailWindow onClose={() => setMailOpen(false)} />}
+      {mailOpen && (
+        <EmailWindow onClose={() => setMailOpen(false)} hasMail={hasNewMail || mailOpen === true && false ? true : hasNewMailEverRef.current} />
+      )}
 
       <audio ref={dingRef} src="" style={{ display: "none" }} />
     </>
