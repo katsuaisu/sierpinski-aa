@@ -126,7 +126,7 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
           aria-label="Open mail"
         >
           <div className="transition-transform group-hover:scale-110 drop-shadow-lg">
-            <MailIconSvg hasBadge={hasNewMail && !mailOpen} />
+            <MailIconSvg hasBadge={badgeVisible && !mailOpen} />
           </div>
           <span
             className="text-[11px] font-semibold text-center leading-tight max-w-20"
@@ -143,7 +143,7 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
 
       {musicOpen && <MusicPlaylistWindow onClose={() => setMusicOpen(false)} />}
       {mailOpen && (
-        <EmailWindow onClose={() => setMailOpen(false)} hasMail={hasNewMail} />
+        <EmailWindow onClose={() => setMailOpen(false)} hasMail={hasArrived} />
       )}
 
       <audio ref={dingRef} src="" style={{ display: "none" }} />
