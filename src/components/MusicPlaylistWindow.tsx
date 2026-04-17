@@ -1,19 +1,27 @@
 import DraggableWindow from "./DraggableWindow";
 
+const coverPicture = new URL("../assets/gallery/coverpicture.png", import.meta.url).href;
+const riskItAllCover = new URL("../assets/gallery/riskitall.png", import.meta.url).href;
+const landslideCover = new URL("../assets/gallery/landslide.png", import.meta.url).href;
+const forGoodCover = new URL("../assets/gallery/forgood.png", import.meta.url).href;
+const molCover = new URL("../assets/gallery/mol.png", import.meta.url).href;
+const duvetCover = new URL("../assets/gallery/duvet.png", import.meta.url).href;
+const birdsCover = new URL("../assets/gallery/birds.png", import.meta.url).href;
+
 interface Track {
   title: string;
   artist: string;
   duration: string;
-  cover: string; // path under /src/assets
+  cover: string;
 }
 
 const TRACKS: Track[] = [
-  { title: "Risk It All", artist: "Bruno Mars", duration: "3:34", cover: "riskitall.png" },
-  { title: "Landslide", artist: "Fleetwood Mac", duration: "3:19", cover: "landslide.png" },
-  { title: "For Good", artist: "Cynthia Erivo & Ariana Grande", duration: "5:38", cover: "forgood.png" },
-  { title: "Mystery Of Love (Demo)", artist: "Sufjan Stevens", duration: "4:08", cover: "mol.png" },
-  { title: "Duvet (Acoustic)", artist: "boa", duration: "3:42", cover: "duvet.png" },
-  { title: "Birds", artist: "Thomas Sanders", duration: "3:12", cover: "birds.png" },
+  { title: "Risk It All", artist: "Bruno Mars", duration: "3:34", cover: riskItAllCover },
+  { title: "Landslide", artist: "Fleetwood Mac", duration: "3:19", cover: landslideCover },
+  { title: "For Good", artist: "Cynthia Erivo & Ariana Grande", duration: "5:38", cover: forGoodCover },
+  { title: "Mystery Of Love (Demo)", artist: "Sufjan Stevens", duration: "4:08", cover: molCover },
+  { title: "Duvet (Acoustic)", artist: "boa", duration: "3:42", cover: duvetCover },
+  { title: "Birds", artist: "Thomas Sanders", duration: "3:12", cover: birdsCover },
 ];
 
 interface MusicPlaylistWindowProps {
@@ -71,7 +79,7 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
               }}
             >
               <img
-                src="/src/assets/coverpicture.png"
+                src={coverPicture}
                 alt="Playlist cover"
                 className="w-full h-full object-cover"
                 onError={(e) => {
@@ -87,7 +95,7 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                   color: "hsla(0, 0%, 0%, 0.9)",
                 }}
               >
-                for the in-betweens 🕊️
+                Songs I Listened To While Making The AA
               </h2>
               <p
                 className="text-[12px] mt-1"
@@ -96,7 +104,7 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                   fontWeight: 600,
                 }}
               >
-                me ♥
+                katsudon
               </p>
               <p className="text-[10px] mt-1" style={{ color: "hsla(0,0%,0%,0.5)" }}>
                 Updated just now
@@ -105,7 +113,7 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                 className="text-[11px] mt-2 leading-snug"
                 style={{ color: "hsla(0,0%,0%,0.7)" }}
               >
-                songs that hold the moments words can't 🎶
+                if you want to be in the mood to read my reflections, i recommend these songs
               </p>
 
               <div className="flex gap-2 mt-3">
@@ -155,7 +163,7 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                   }}
                 >
                   <img
-                    src={`/src/assets/${track.cover}`}
+                    src={track.cover}
                     alt={track.title}
                     className="w-full h-full object-cover"
                     onError={(e) => {

@@ -34,7 +34,7 @@ const Index = () => {
     const handleInteraction = () => {
       if (audioEl.paused || audioEl.muted) {
         audioEl.muted = false;
-        audioEl.play().catch(() => {});
+        audioEl.play().catch(() => { });
       }
     };
 
@@ -125,22 +125,14 @@ const Index = () => {
           position="top-right"
           content={
             <div className="space-y-3">
-              <h3 className="text-sm font-semibold" style={{ color: "hsl(var(--foreground))", fontFamily: "'SF Pro Display', -apple-system, sans-serif" }}>
-                Welcome! 👋
-              </h3>
-              <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Here's how to navigate this experience:
-              </p>
-              <ul className="text-xs space-y-2" style={{ color: "hsl(var(--muted-foreground))" }}>
-                <li>🖱️ <strong>Rotate</strong> the 3D model by clicking and dragging</li>
-                <li>🔍 <strong>Zoom</strong> in/out with your scroll wheel</li>
-                <li>🔺 <strong>Click</strong> on any triangle face to see its story</li>
-                <li>🪟 <strong>Drag</strong> any window by its title bar to rearrange</li>
-                <li>↔️ <strong>Resize</strong> any window from the bottom-right corner</li>
-                <li>🎵 Music plays automatically — click anywhere if it doesn't start</li>
-              </ul>
-              <p className="text-xs italic" style={{ color: "hsl(var(--muted-foreground))" }}>
-                Take your time exploring each triangle. Every face has a story.
+              <p className="text-xs leading-relaxed" style={{ color: "hsl(var(--muted-foreground))", whiteSpace: "pre-wrap" }}>
+                {`here are some things to know before using the website :>
+
+- you can rotate the 3d model and zoom into it
+- click on any triangle face to see its story
+- you can drag and resize any window that pops up
+
+take your time to explore the triangle, because by doing so, you're already exploring my story :)`}
               </p>
             </div>
           }
