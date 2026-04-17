@@ -4,14 +4,13 @@ import SceneWindow from "@/components/SceneWindow";
 import MusicLyricsWindow from "@/components/MusicLyricsWindow";
 import DraggableWindow from "@/components/DraggableWindow";
 import IOSFolder from "@/components/IOSFolder";
-import EmailNotification from "@/components/EmailNotification";
+import AppSidebar from "@/components/AppSidebar";
 import riskItAllAudio from "../../riskitall.mp3";
 
 const Index = () => {
   const [introComplete, setIntroComplete] = useState(false);
   const [sceneVisible, setSceneVisible] = useState(false);
   const [musicVisible, setMusicVisible] = useState(false);
-  const [showEmail, setShowEmail] = useState(false);
   const sceneRef = useRef<HTMLDivElement>(null);
   const musicRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement>(null);
@@ -54,13 +53,6 @@ const Index = () => {
       window.removeEventListener("keydown", handleInteraction);
     };
   }, []);
-
-  // Show email notification after 1 minute
-  useEffect(() => {
-    if (!introComplete) return;
-    const timer = setTimeout(() => setShowEmail(true), 60000);
-    return () => clearTimeout(timer);
-  }, [introComplete]);
 
   return (
     <div className="relative w-screen h-screen dot-grid-bg overflow-hidden">
@@ -155,8 +147,8 @@ const Index = () => {
         />
       )}
 
-      {/* Email notification — appears after 1 minute */}
-      {showEmail && <EmailNotification />}
+      {/* Right-side app sidebar (Music + Mail) */}
+      <AppSidebar introComplete={introComplete} />
 
       {/* Intro overlay */}
       {!introComplete && (
