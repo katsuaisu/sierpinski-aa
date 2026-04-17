@@ -122,18 +122,18 @@ const IntroSequence = ({
 
       await new Promise<void>((r) => setTimeout(r, 150));
 
-      // Drag 2: Music + Lyrics window
+      // Drag 2: Music + Lyrics window (now drags in from LEFT to the RIGHT side)
       const musicEl = musicRef.current;
       if (musicEl) {
-        gsap.set(musicEl, { x: w + 500, opacity: 0 });
+        gsap.set(musicEl, { x: -(w + 500), opacity: 0 });
         await new Promise<void>((resolve) => requestAnimationFrame(() => resolve(undefined)));
         onShowMusic();
 
         await new Promise<void>((resolve) => {
-          tl.to(cursor, { left: w + 30, top: h * 0.35, duration: 0.35, ease: "power2.in", onComplete: resolve });
+          tl.to(cursor, { left: -30, top: h * 0.35, duration: 0.35, ease: "power2.in", onComplete: resolve });
         });
         await new Promise<void>((resolve) => {
-          tl.to(cursor, { left: 80, top: h * 0.45, duration: 0.9, ease: "power3.out" });
+          tl.to(cursor, { left: w - 80, top: h * 0.45, duration: 0.9, ease: "power3.out" });
           tl.to(musicEl, { x: 0, opacity: 1, duration: 0.9, ease: "power3.out", onComplete: resolve }, "<");
         });
       }
