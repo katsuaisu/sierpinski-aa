@@ -70,9 +70,14 @@ const MusicPlaylistWindow = ({ onClose }: MusicPlaylistWindowProps) => {
                 boxShadow: "0 8px 20px hsla(0, 0%, 0%, 0.15)",
               }}
             >
-              <div className="w-full h-full flex items-center justify-center text-white text-3xl">
-                ♡
-              </div>
+              <img
+                src="/src/assets/coverpicture.png"
+                alt="Playlist cover"
+                className="w-full h-full object-cover"
+                onError={(e) => {
+                  (e.target as HTMLImageElement).style.display = "none";
+                }}
+              />
             </div>
             <div className="flex-1 min-w-0">
               <h2
