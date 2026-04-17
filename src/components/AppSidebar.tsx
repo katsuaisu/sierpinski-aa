@@ -47,7 +47,8 @@ interface AppSidebarProps {
 }
 
 const AppSidebar = ({ introComplete }: AppSidebarProps) => {
-  const [hasNewMail, setHasNewMail] = useState(false);
+  const [hasArrived, setHasArrived] = useState(false); // mail exists in inbox
+  const [badgeVisible, setBadgeVisible] = useState(false); // unread (1) badge
   const [mailOpen, setMailOpen] = useState(false);
   const [musicOpen, setMusicOpen] = useState(false);
   const dingRef = useRef<HTMLAudioElement | null>(null);
@@ -56,8 +57,8 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
   useEffect(() => {
     if (!introComplete) return;
     const timer = setTimeout(() => {
-      setHasNewMail(true);
-      // Play notification "ding" sound
+      setHasArrived(true);
+      setBadgeVisible(true);
       try {
         const AudioCtx = window.AudioContext || (window as any).webkitAudioContext;
         const ctx = new AudioCtx();
@@ -85,8 +86,7 @@ const AppSidebar = ({ introComplete }: AppSidebarProps) => {
 
   const handleMailClick = () => {
     setMailOpen((v) => !v);
-    // Opening clears the badge
-    if (!mailOpen) setHasNewMail(false);
+    if (badgeVisible) setBadgeVisible(false);
   };
 
   if (!introComplete) return null;
