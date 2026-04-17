@@ -2,9 +2,10 @@ import DraggableWindow from "./DraggableWindow";
 
 interface EmailWindowProps {
   onClose: () => void;
+  hasMail?: boolean;
 }
 
-const EmailWindow = ({ onClose }: EmailWindowProps) => {
+const EmailWindow = ({ onClose, hasMail = true }: EmailWindowProps) => {
   return (
     <div className="absolute right-28 top-24 z-40 animate-scale-in">
       <DraggableWindow
